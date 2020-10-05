@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="/User/Item/0">User Master</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+<article class="col-md-12">
+    <div class="pt-3">
+        <div class="mb-4"> <a href="/User/Item/0" class="btn btn-secondary float-right ml-1">+</a></div>
+    </div>
+</article>
+<br />
+<div ng-app="myApp" ng-controller="UserList">
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SrNo</th>
+                    <th>employee Code</th>
+                    <th>employee Name</th>
+                    <th>Email Address</th>
+                    <th>Is Active</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in usergridData">
+                    <td>{{$index+1}}</td>
+                    <td><a href="/User/Item/{{item.seqid}}">{{item.employee_code}}</a></td>
+                    <td>{{item.employee_name}}</td>
+                    <td>{{item.email_address}}</td>
+                    <td>{{item.is_active}} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

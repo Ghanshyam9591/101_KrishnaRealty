@@ -1,0 +1,82 @@
+﻿@model EMS.Web.Models.LoginViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>EMS | Log in</title>
+
+    @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/login.css" rel="stylesheet" />
+    @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>*@
+    <script src="~/Scripts/bootstrap.min.js"></script>
+   @* <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <style>
+        .has-error {
+            color: #c30808;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!------ Include the above in your HEAD tag ---------->
+    <div class="login-box" ng-controller="loginCtrl" ng-app="myApp2">
+        <div class="login-logo">
+            <a><img src="~/images/Logo.png"></a>
+        </div><!-- /.login-logo -->
+        <div class="login-box-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+
+            @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group has-feedback">
+                    @Html.TextBoxFor(m => m.UserID, new { @class = "form-control", @placeholder = "Email", required = "required", type = "number" })
+                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", required = "required" })
+                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                if (!string.IsNullOrEmpty(ViewBag.errorMessage))
+                {
+                    <span class="has-error">@ViewBag.errorMessage</span>
+                    <br />
+                    <br />
+                }
+                <div class="row">
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-4">
+                        <input type="submit" value="Log in" class="btn btn-primary btn-block btn-flat" />
+                    </div>
+                </div>
+            }
+
+        </div><!-- /.login-box-body -->
+        @*<script>
+                var app = angular.module('myApp2', []);
+                debugger;
+                app.controller("loginCtrl", ["$scope", "$timeout", "$location", "$window", function ($scope, $timeout, $location, $window) {
+
+                    $scope.signin = function (loginid, password) {
+                        var url = $location.absUrl().split('?')[0]
+                        if (loginid === "100" & password === "123") {
+                            $window.location.href = url + "Home";
+                        }
+                        else {
+                            alert("Invalid credentials !");
+                        }
+
+                    }
+                }]);
+            </script>*@
+    </div>
+</body>
+</html>

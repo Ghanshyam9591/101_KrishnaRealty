@@ -1,0 +1,150 @@
+﻿@{
+    ViewBag.Title = "Query Module";
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<style>
+    /*label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: center;
+        width: 150px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }*/
+
+    .btn-primary {
+        color: #fff;
+        background-color: #383095;
+        border-color: #383095;
+    }
+
+    .btnPosition {
+        margin-bottom: 30px;
+    }
+    .box{
+          /*width: 150px;
+          height: 150px;*/
+          opacity: 3;
+          position: absolute;                       
+          top: 68px;
+          left: 35px;
+          z-index:3;
+      }
+</style>
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">Query Module</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+
+<br />
+<div ng-app="myApp" ng-controller="QueryModule">
+    <div>
+        <form>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Customer</label>
+                    <input type="text" name="customer" id="customer" ng-model="customer" ng-keyup="complete(customer)" class="form-control" />
+                    <ul class="list-group box" style="overflow:auto;">
+                        <li class="list-group-item" ng-repeat="item in filterCustomer" ng-click="fillTextbox(item,filterCustomer,customer)">{{item}}</li>
+                    </ul>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Location</label>
+                    <select ng-model="queryParam.location_id" id="location_id" ng-options="x.SeqID as x.Name for x in locations" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Enquiry Source</label>
+                    <select ng-model="queryParam.enquiry_source_id" id="enquiry_source_id" ng-options="x.SeqID as x.Name for x in enquiry_sources" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Enquiry From</label>
+                    <input ng-model="queryParam.enquiry_from" id="enquiry_from" type="date" class="form-control" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Enquiry To</label>
+                    <input ng-model="queryParam.enquiry_to" id="enquiry_to" type="date" class="form-control" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Action Type</label>
+                    <select ng-model="queryParam.action_type_id" id="action_type_id" ng-options="x.SeqID as x.Name for x in action_types" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-primary" ng-click="GetGridRecord(val_customer_code, queryParam.location_id, queryParam.enquiry_source_id, queryParam.enquiry_from,queryParam.enquiry_to, queryParam.action_type_id)">
+                        <span ng-show="searchButtonText == 'Searching'">
+                            <img style="width:20px;height:20px;" src="~/images/loader.gif" />
+                        </span>
+                        {{ searchButtonText }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>Sr.No</th>
+                    <th>Enq_No.</th>
+                    <th>Customer</th>
+                    <th>Mobile_1</th>
+                    <th>Mobile_2 </th>
+                    <th>Email </th>
+                    <th>Location </th>
+                    <th>Property</th>
+                    <th>Budget(Lakhs)</th>
+                    <th>Last_Remark</th>
+                    <th>Enquiry_Date</th>
+                    <th>Enquiry_Action_Type</th>
+                    <th>Customer_Response</th>
+                    <th>Add</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in query_data track by $index">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.seqid}}</td>
+                    <td>{{item.Customer}}</td>
+                    <td>{{item.mobile1}} </td>
+                    <td>{{item.mobile2}} </td>
+                    <td>{{item.email}} </td>
+                    <td>{{item.Location}}</td>
+                    <td>{{item.propertytype}}</td>
+                    <td>{{item.cost_upto}}</td>
+                    <td>{{item.last_remark}}</td>
+                    <td>{{item.enquiry_date | date:'dd-MMM-yyyy'}}</td>
+                    <td style="width:500px;"><select ng-model="item.action_type_id" id="action_type_id" ng-options="x.SeqID as x.Name for x in action_types" class="form-control"></select></td>
+                    <td><textarea class="form-control" rows="2" ng-model="item.remark"></textarea></td>
+                    <td><button type="submit" class="btn btn-primary px-3" ng-click="AddComment(item.seqid,item.action_type_id,item.remark)">+</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#exportSubmit").click(function () {
+
+            debugger;
+            var AsOnDate = $("#AS_ON_DATE").val();
+            var ClaimType = $("#CLAIM_TYPE").val();
+
+            if (ClaimType == "?") {
+                ClaimType = "";
+            }
+
+            $("#exportData input[name=AsOnDate]").val(AsOnDate);
+            $("#exportData input[name=ClaimType]").val(ClaimType);
+            $("#exportData").submit();
+
+        })
+    });
+</script>

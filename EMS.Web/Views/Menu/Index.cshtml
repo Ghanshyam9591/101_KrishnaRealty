@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Menu";
+
+}
+<style>
+    form {
+        margin-left: 35%;
+    }
+
+    label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: center;
+        width: 150px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+</style>
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">Menu</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+
+<br />
+<div ng-controller="Menu" ng-app="myApp">
+    @*<form class="form-inline">
+            <div class="form-group col-md-12 mb-2">
+                <label>Menu Type</label>
+                <select ng-model="MenuType" ng-options="x for x in menutypes" class="form-control col-md-6"></select>
+            </div>
+            <br />
+
+        </form>*@
+    <div class="row mt-3">
+        @*<div class="col-md-2 text-center" ng-repeat="item in submenus">
+                <a href="" style="text-decoration:none">
+                    <div class="card" style="height:180px; border-radius:10px">
+                        <div class="card-body">
+                            <i class="fa fa-4x pb-1 fa-book"></i>
+                            <h5 class="card-title">Special title treatment</h5>
+
+                        </div>
+                    </div>
+                </a>
+
+            </div>*@
+
+        <div class="col-md-2 mb-2 text-center">
+            <a href="/User" style="text-decoration:none">
+                <div class="card" style="height:180px; border-radius:10px">
+                    <div class="card-body">
+                        <i class="fa fa-4x pb-1 fa fa-book"></i>
+                        <h5 class="card-title">User Master</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-2 mb-2 text-center">
+            <a href="/LovCategory" style="text-decoration:none">
+                <div class="card" style="height:180px; border-radius:10px">
+                    <div class="card-body">
+                        <i class="fa fa-4x pb-1 fa fa-book"></i>
+                        <h5 class="card-title">lov Category</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-2 mb-2 text-center">
+            <a href="/Lov" style="text-decoration:none">
+                <div class="card" style="height:180px; border-radius:10px">
+                    <div class="card-body">
+                        <i class="fa fa-4x pb-1 fa fa-book"></i>
+                        <h5 class="card-title">lov</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-2 mb-2 text-center">
+            <a href="/Role" style="text-decoration:none">
+                <div class="card" style="height:180px; border-radius:10px">
+                    <div class="card-body">
+                        <i class="fa fa-4x pb-1 fa fa-book"></i>
+                        <h5 class="card-title">Role Master</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-2 mb-2 text-center">
+            <a href="/MenuRoleMap" style="text-decoration:none">
+                <div class="card" style="height:180px; border-radius:10px">
+                    <div class="card-body">
+                        <i class="fa fa-4x pb-1 fa fa-book"></i>
+                        <h5 class="card-title">Menu Role Mapping</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    </div>
+</div>

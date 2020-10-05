@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Assign Enquiry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="/User/Item/0">Assign Enquiry</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+<br />
+<div ng-app="myApp" ng-controller="assignEnquiryList">
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SrNo</th>
+                    <th>Enquiry No.</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Cost Upto</th>
+                    <th>Agents</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in enquiry_data">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.seqid}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.mobile1}} </td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.cost_upto}}</td>
+                    <td><select ng-model="item.assign_to_id" id="assign_to_id" ng-options="x.SeqID as x.Name for x in users" class="form-control"></select></td>
+                    <td><button type="submit" class="btn btn-primary px-3" ng-click="save(item)">+</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

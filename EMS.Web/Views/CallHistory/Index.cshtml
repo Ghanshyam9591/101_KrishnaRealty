@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Customer Call History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: center;
+        width: 150px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #383095;
+        border-color: #383095;
+    }
+     .box{
+          /*width: 150px;
+          height: 150px;*/
+          opacity: 3;
+          position: absolute;                       
+          top: 68px;
+          left: 35px;
+          z-index:3;
+      }
+</style>
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">Customer Call History</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+
+<br />
+<div ng-app="myApp" ng-controller="CallHistory">
+    <div class="container">
+        <div class="panel panel-default">
+            <div style="margin-left:20%">
+                <form>
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label>Customer</label>
+                            <input type="text" name="customer" id="customer" ng-model="customer" ng-keyup="complete(customer)" class="form-control" />
+                            <ul class="list-group box" style="overflow:auto;">
+                                <li class="list-group-item" ng-repeat="item in filterCustomer" ng-click="fillTextbox(item,filterCustomer,customer)">{{item}}</li>
+                            </ul>
+                        </div>
+                        <div class="form-group col-md-3" style="margin-top:30px;">
+                            <button type="submit" class="btn btn-primary" ng-click="GetGridRecord(val_customer_code)">
+                                <span ng-show="searchButtonText == 'Searching'">
+                                    <img style="width:20px;height:20px;" src="~/images/loader.gif" />
+                                </span>
+                                {{ searchButtonText }}
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SR_NO</th>
+                    <th>Enquiry_No</th>
+                    <th>Call_Date</th>
+                    <th>Action</th>
+                    <th>Customer_Response</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in CallHistoryGridData">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.enquiry_no}}</td>
+                    <td>{{item.call_date | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{item.action_type}}</td>
+                    <td>{{item.call_response}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

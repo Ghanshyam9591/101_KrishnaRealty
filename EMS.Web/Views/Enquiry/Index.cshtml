@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Enquiry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+<style>
+    label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: center;
+        width: 150px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #383095;
+        border-color: #383095;
+    }
+</style>
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">Enquiry</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+
+<br />
+<div ng-app="myApp" ng-controller="Enquiry">
+    <div class="container">
+        <div class="panel panel-default">
+            <div style="margin-left:10%">
+                <form class="form-inline">
+
+                    <div class="form-group mb-2">
+                        <label>Enquiry Date</label>
+                        <input ng-model="enquiry_date" id="enquiry_date" type="date" class="form-control" placeholder="dssd" />
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label>Location</label>
+                        <select ng-model="location_id" id="location_id" ng-options="x.ID as x.Name for x in locations" class="form-control"></select>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <button type="submit" class="btn btn-primary mb-2" ng-disabled="CLAIM_TYPE.Name==='Select'" ng-click="GetGridRecord(enquiry_date,location_id.ID)">
+                            <span ng-show="searchButtonText == 'Searching'">
+                                <img style="width:20px;height:20px;" src="~/images/loader.gif" />
+                            </span>
+                            {{ searchButtonText }}
+                        </button>
+                    </div>
+                    <div class="form-group mb-2">
+
+                    </div>
+
+                    @* <i class="fa fa-file-excel-o" style="font-size:20px" ng-click="exportToExcel(AS_ON_DATE,CLAIM_TYPE)" aria-hidden="true"></i>*@
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary mb-2" ng-hide="isAssignBtnHide" ng-click="AssignBatchNumber(RevisedExpenseGridData)">Assign Batch Number</button>
+    <button type="button" class="btn btn-primary mb-2" id="exportSubmit" ng-hide="isAssignBtnHide">Export To Excel</button>
+    <form id="exportData" action="/ProcessOfRecord/GetExportToExcel" style="display:none">
+        <input type="text" value="" name="AsOnDate" />
+        <input type="text" value="" name="ClaimType" />
+        @*<input type="submit" value="Export" />*@
+        @* <button type="submit" class="btn btn-primary mb-2" ng-hide="isAssignBtnHide" ng-click="exportToExcel(AS_ON_DATE,CLAIM_TYPE)">Export To Excel</button>*@
+
+
+    </form>
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SR_NO</th>
+                    <th>Select All<input type="checkbox" ng-model="SELECT_STATUS" ng-change="CheckboxActiity(0,SELECT_STATUS,1)"></th>
+                    <th>Name</th>
+                    <th>Mobile1</th>
+                    <th>Mobile2</th>
+                    <th>Email </th>
+                    <th>Location </th>
+                    <th>Cost_Upto </th>
+                    <th>Property_Type</th>
+                    <th>Enquiry_Source</th>
+                    <th>Remark</th>
+                    <th>Enquiry_date</th>
+                    <td>Assign To</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in RevisedExpenseGridData track by $index">
+                    <td>{{$index+1}}</td>
+                    <td><input type="checkbox" ng-checked="item.SELECT_STATUS" ng-model="item.SELECT_STATUS" ng-change="CheckboxActiity($index,item.SELECT_STATUS,0)" /></td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.mobile1}}</td>
+                    <td>{{item.mobile2}}</td>
+                    <td>{{item.email}} </td>
+                    <td>{{item.location_id}} </td>
+                    <td>{{item.cost_upto}} </td>
+                    <td>{{item.property_type_id}}</td>
+                    <td>{{item.enquiry_source_id}}</td>
+                    <td>{{item.remark}}</td>
+                    <td>{{item.enquiry_date | date:'dd-MMM-yyyy'}}</td>
+                    <td><select ng-model="assign_to" id="assign_to" ng-options="x.ID as x.Name for x in agents" ng-change="ddlassign_to($index,item.assign_to,0)" class="form-control"></select></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        if ($('[type="date"]').prop('type') != 'date') {
+            $('[type="date"]').datepicker();
+        } sss
+
+        $("#exportSubmit").click(function () {
+
+            debugger;
+            var AsOnDate = $("#AS_ON_DATE").val();
+            var ClaimType = $('#CLAIM_TYPE :selected').text();
+
+            $("#exportData input[name=AsOnDate]").val(AsOnDate);
+            $("#exportData input[name=ClaimType]").val(ClaimType);
+            $("#exportData").submit();
+
+        })
+    });
+</script>

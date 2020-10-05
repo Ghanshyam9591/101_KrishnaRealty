@@ -1,0 +1,166 @@
+﻿@{
+    ViewBag.Title = "Sap Data";
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<style>
+    label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: center;
+        width: 150px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #383095;
+        border-color: #383095;
+    }
+</style>
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">Sap Data</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+
+<br />
+<div ng-app="myApp" ng-controller="SAPData">
+    <div class="container">
+        <div class="panel panel-default">
+            <div style="margin-left:10%">
+                <form class="form-inline">
+
+                    <div class="form-group mb-2">
+                        <label>As On Date</label>
+                        <input ng-model="AS_ON_DATE" id="AS_ON_DATE" type="date" class="form-control" placeholder="dssd" />
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label> Claim Type</label>
+                        <select ng-model="CLAIM_TYPE" id="CLAIM_TYPE" ng-options="x.Name for x in claimTypes" class="form-control"></select>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <button type="submit" class="btn btn-primary mb-2" ng-disabled="CLAIM_TYPE.Name==='Select'" ng-click="GetGridRecord(AS_ON_DATE,CLAIM_TYPE.Name)">
+                            <span ng-show="searchButtonText == 'Searching'">
+                                <img style="width:20px;height:20px;" src="~/images/loader.gif" />
+                            </span>
+                            {{ searchButtonText }}
+                        </button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary mb-2" ng-hide="isAssignBtnHide" ng-click="ChangeSapFileStatus(sapgriddata)">Generate Sap File</button>
+    <button type="button" class="btn btn-primary mb-2" id="exportSubmit" ng-hide="isExportbuttonHide">Export To Excel</button>
+    <form id="exportData" action="/SAPData/GetExportToExcel" style="display:none">
+        <input type="text" value="" name="AsOnDate" />
+        <input type="text" value="" name="ClaimType" />
+        @*<input type="submit" value="Export" />*@
+        @* <button type="submit" class="btn btn-primary mb-2" ng-hide="isAssignBtnHide" ng-click="exportToExcel(AS_ON_DATE,CLAIM_TYPE)">Export To Excel</button>*@
+
+
+    </form>
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SR_NO</th>
+                    <th>Select All<input type="checkbox" ng-model="CheckAllstatus" ng-change="CheckboxActiity(0,CheckAllstatus,1)"></th>
+                    <th>ACTIVITY NUMBER</th>
+                    <th>ACTIVITY NAME</th>
+                    <th>ACTIVITY CREATION DATE</th>
+                    <th>EMP CODE </th>
+                    <th>EMP NAME </th>
+                    <th>MEETING DURATION(MIN) </th>
+                    <th>MODE OF ACTIVITY</th>
+                    <th>MODE OF CONVEYANCE</th>
+                    <th>CLAIM CONVEYANCE EXPENSE</th>
+                    <th>CONVEYANCE EXPENSE AMOUNT</th>
+                    <th>CLAIM_CON_EXP_FOR_RET_TRIP</th>
+                    <th>RETURN TRIP AMOUNT</th>
+                    <th>ADDITIONAL DISRIBUTORS</th>
+                    <th>PRODUCT TYPE</th>
+                    <th>SUPERVISOR ID</th>
+                    <th>SUPERVISOR NAME</th>
+                    <th>SUPERVISOR APPROVAL DATE</th>
+                    <th>CLAIM AMT</th>
+                    <th>PARTNER CODE</th>
+                    <th>PARTNER NAME</th>
+
+                    <th>LAST UPDATED DATE</th>
+                    <th>GROUP ACTIVITY</th>
+                    <th>MODE</th>
+                    <th>ACTIVITY TYPE</th>
+                    <th>CLAIM STATUS</th>
+                    <th>STATUS</th>
+
+                    <th>CLAIM TYPE</th>
+                    <th>BATCH NUMBER</th>
+                    <th>BATCH NUMBER DATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in sapgriddata track by $index">
+                    <td>{{$index+1}}</td>
+                    <td><input type="checkbox" ng-checked="item.SELECT_STATUS" ng-model="item.SELECT_STATUS" ng-change="CheckboxActiity($index,item.SELECT_STATUS,0)" /></td>
+                    <td>{{item.ACTIVITY_NUMBER}}</td>
+                    <td>{{item.ACTIVITY_NAME}}</td>
+                    <td>{{item.ACTIVITY_CREATION_DATE | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{item.EMP_CODE}} </td>
+                    <td>{{item.EMP_NAME}} </td>
+                    <td>{{item.MEETING_DURATION}} </td>
+                    <td>{{item.MODE_OF_ACTIVITY}}</td>
+                    <td>{{item.MODE_OF_CONVEYANCE}}</td>
+                    <td>{{item.CLAIM_CONVEYANCE_EXPENSE}}</td>
+                    <td>{{item.CONVEYANCE_EXPENSE_AMOUNT}}</td>
+                    <td>{{item.CLAIM_CON_EXP_FOR_RET_TRIP}}</td>
+                    <td>{{item.RETURN_TRIP_AMOUNT}}</td>
+                    <td>{{item.ADDITIONAL_DISRIBUTORS}}</td>
+                    <td>{{item.PRODUCT_TYPE}}</td>
+                    <td>{{item.SUPERVISOR_ID}}</td>
+                    <td>{{item.SUPERVISOR_NAME}}</td>
+                    <td>{{item.SUPERVISOR_APPROVAL_DATE}}</td>
+                    <td>{{item.CLAIM_AMT}}</td>
+                    <td>{{item.PARTNER_CODE}}</td>
+                    <td>{{item.PARTNER_NAME}}</td>
+
+                    <td>{{item.LAST_UPDATED_DATE | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{item.GROUP_ACTIVITY}}</td>
+                    <td>{{item.MODE}}</td>
+                    <td>{{item.ACTIVITY_TYPE}}</td>
+                    <td>{{item.CLAIM_STATUS}}</td>
+                    <td>{{item.STATUS}}</td>
+
+                    <td>{{item.CLAIM_TYPE}}</td>
+                    <td>{{item.BATCH_NUMBER}}</td>
+                    <td>{{item.BATCH_NUMBER_DATE | date:'dd-MMM-yyyy'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#exportSubmit").click(function () {
+
+            debugger;
+            var AsOnDate = $("#AS_ON_DATE").val();
+            var ClaimType = $("#CLAIM_TYPE").val();
+
+            if (ClaimType == "?") {
+                ClaimType = "";
+            }
+
+            $("#exportData input[name=AsOnDate]").val(AsOnDate);
+            $("#exportData input[name=ClaimType]").val(ClaimType);
+            $("#exportData").submit();
+            location.reload();
+        })
+    });
+</script>

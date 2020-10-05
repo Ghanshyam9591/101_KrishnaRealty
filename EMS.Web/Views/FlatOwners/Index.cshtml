@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Flat Owner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="/FlatOwners/Item/0">Flat Owners</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+<article class="col-md-12">
+    <div class="pt-3">
+        <div class="mb-4"> <a href="/FlatOwners/Item/0" class="btn btn-secondary float-right ml-1">+</a></div>
+    </div>
+</article>
+<br />
+<div ng-app="myApp" ng-controller="FlatOwnersList">
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SrNo</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>IsActive</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in enquiry_data">
+                    <td>{{$index+1}}</td>
+                    <td><a href="/FlatOwners/Item/{{item.seqid}}">{{item.name}}</a></td>
+                    <td>{{item.mobile1}} </td>
+                    <td>{{item.mobile2}} </td>
+                    <td>{{item.email}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

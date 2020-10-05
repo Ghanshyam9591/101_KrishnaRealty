@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Releasing of Payment";
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<style>
+    label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: center;
+        width: 150px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        color: #fff;
+        background-color: #383095;
+        border-color: #383095;
+    }
+</style>
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">Releasing of Payment</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+
+<br />
+<div ng-app="myApp" ng-controller="ReleaseOfPayment">
+    <div class="container">
+        <div class="panel panel-default">
+            <div style="margin-left:10%">
+                <form class="form-inline">
+
+                    <div class="form-group mb-2">
+                        <label>As On Date</label>
+                        <input ng-model="AS_ON_DATE" id="AS_ON_DATE" type="date" class="form-control" placeholder="dssd" />
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <label> Claim Type</label>
+                        <select ng-model="CLAIM_TYPE" id="CLAIM_TYPE" ng-options="x.Name for x in claimTypes" class="form-control"></select>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+                        <button type="submit" class="btn btn-primary mb-2" ng-disabled="CLAIM_TYPE.Name==='Select'" ng-click="GetGridRecord(AS_ON_DATE,CLAIM_TYPE.Name)">
+                            <span ng-show="searchButtonText == 'Searching'">
+                                <img style="width:20px;height:20px;" src="~/images/loader.gif" />
+                            </span>
+                            {{ searchButtonText }}
+                        </button>
+                    </div>
+                    <div class="form-group mx-sm-3 mb-2">
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary mb-2" ng-hide="isPaymentdone" ng-click="paymentStatus(ReleaseOfPaymentGridData)">Payment Done</button>
+    <button type="button" class="btn btn-primary mb-2" id="exportSubmit">Export To PDF</button>
+    <form id="exportData" action="/ReleasingOfPayment/GetExportToPDF" style="display:none">
+        <input type="text" value="" name="AsOnDate" />
+        <input type="text" value="" name="ClaimType" />
+    </form>
+
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SR_NO</th>
+                    <th>SELECT ALL<input type="checkbox" ng-model="SELECT_STATUS" ng-change="CheckboxActiity(0,SELECT_STATUS,1,AS_ON_DATE)"></th>
+                    <th>EMP CODE</th>
+                    <th>EMP NAME</th>
+                    <th>AMOUNT</th>
+                    <th>BATCH NUMBER</th>
+                    <th>BATCH NUMBER DATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in ReleaseOfPaymentGridData">
+                    <td>{{$index+1}}</td>
+                    <td><input type="checkbox" ng-checked="item.SELECT_STATUS" ng-model="item.SELECT_STATUS" ng-change="CheckboxActiity($index,item.SELECT_STATUS,0)" /></td>
+                    <td>{{item.EMP_CODE}}</td>
+                    <td>{{item.EMP_NAME}}</td>
+                    <td>{{item.CLAIM_AMT | number:2}} </td>
+                    <td>{{item.BATCH_NUMBER}} </td>
+                    <td>{{item.BATCH_NUMBER_DATE | date:'dd-MMM-yyyy'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#exportSubmit").click(function () {
+
+            debugger;
+            var AsOnDate = $("#AS_ON_DATE").val();
+            var ClaimType = $('#CLAIM_TYPE :selected').text();
+
+            $("#exportData input[name=AsOnDate]").val(AsOnDate);
+            $("#exportData input[name=ClaimType]").val(ClaimType);
+            $("#exportData").submit();
+
+        })
+    });
+</script>
