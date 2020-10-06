@@ -20,6 +20,13 @@ namespace EMS.Web.Models
             ListModel = bll.FILE_DROPDOWN_LIST(GetQuery.DDL_GET_PROPERTY_TYPES, null);
             return ListModel;
         }
+        public List<DDLModel> GetEnquiryTypes()
+        {
+            ListModel = new List<DDLModel>();
+            DDLModel ddlobj = new DDLModel();
+            ListModel = bll.FILE_DROPDOWN_LIST(GetQuery.DDL_GET_ENQUIRY_TYPES, null);
+            return ListModel;
+        }
         public List<DDLModel> GetLovCategory()
         {
             ListModel = new List<DDLModel>();

@@ -90,12 +90,12 @@ namespace EMS.Common
                 return @"insert into ems_tbl_enquiry_trans
                         (
                             name, mobile1, mobile2, email, location_id, cost_upto, property_type_id, enquiry_source_id,
-                             remark, created_by, created_date, enquiry_date
+                             remark, created_by, created_date, enquiry_type_id,enquiry_date
                         )
                         values
                         (
                             @name, @mobile1, @mobile2, @email, @location_id, @cost_upto, @property_type_id, @enquiry_source_id,
-                             @remark, @created_by, @created_date, @enquiry_date
+                             @remark, @created_by, @created_date,@enquiry_type_id, @enquiry_date
                         )";
             }
         }
@@ -107,7 +107,7 @@ namespace EMS.Common
                             name=@name, mobile1=@mobile1, mobile2=@mobile2,
 							email=@email, location_id=@location_id, cost_upto=@cost_upto,
 							property_type_id=@property_type_id, enquiry_source_id=@enquiry_source_id,
-                             remark=@remark, enquiry_date=@enquiry_date where seqid=@seqid ";
+                             remark=@remark, enquiry_type_id=@enquiry_type_id,enquiry_date=@enquiry_date where seqid=@seqid ";
             }
         }
         public static string FLAT_OWNER_INSERT_QUERY
@@ -203,6 +203,14 @@ namespace EMS.Common
             {
                 return @"select lov.id,lov.name  from ems_tbl_lov_category lc
                             inner join ems_tbl_lov lov on lov.category_id =lc.id  where lc.code='#PRPTTY#' and lc.is_active=true";
+            }
+        }
+        public static string DDL_GET_ENQUIRY_TYPES
+        {
+            get
+            {
+                return @"select lov.id,lov.name  from ems_tbl_lov_category lc
+                            inner join ems_tbl_lov lov on lov.category_id =lc.id  where lc.code='#ENQTYPE#' and lc.is_active=true";
             }
         }
         public static string DDL_GET_LOV_CATEGORY

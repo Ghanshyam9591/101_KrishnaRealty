@@ -76,7 +76,11 @@
                     <select ng-model="queryParam.action_type_id" id="action_type_id" ng-options="x.SeqID as x.Name for x in action_types" class="form-control"></select>
                 </div>
                 <div class="form-group col-md-3">
-                    <button type="submit" class="btn btn-primary" ng-click="GetGridRecord(val_customer_code, queryParam.location_id, queryParam.enquiry_source_id, queryParam.enquiry_from,queryParam.enquiry_to, queryParam.action_type_id)">
+                    <label for="">Enquiry Type</label>
+                    <select ng-model="queryParam.enquiry_type_id" id="enquiry_type_id" ng-options="x.SeqID as x.Name for x in enquiry_types" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-primary" ng-click="GetGridRecord(val_customer_code, queryParam.location_id, queryParam.enquiry_source_id, queryParam.enquiry_from,queryParam.enquiry_to, queryParam.action_type_id,queryParam.enquiry_type_id)">
                         <span ng-show="searchButtonText == 'Searching'">
                             <img style="width:20px;height:20px;" src="~/images/loader.gif" />
                         </span>

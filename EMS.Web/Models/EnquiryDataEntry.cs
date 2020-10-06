@@ -64,6 +64,7 @@ namespace EMS.Web.Models
                                              new NpgsqlParameter("@remark",string.IsNullOrEmpty(model.remark) ? "":model.remark),
                                              new NpgsqlParameter("@created_by",model.created_by),
                                              new NpgsqlParameter("@created_date",DateTime.Now),
+                                             new NpgsqlParameter("enquiry_type_id",model.enquiry_type_id),
                                              new NpgsqlParameter("@enquiry_date",model.enquiry_date)
             };
 
@@ -81,6 +82,7 @@ namespace EMS.Web.Models
                                              new NpgsqlParameter("@cost_upto",model.cost_upto),
                                              new NpgsqlParameter("@property_type_id",model.property_type_id),
                                              new NpgsqlParameter("@enquiry_source_id",model.enquiry_source_id),
+                                             new NpgsqlParameter("enquiry_type_id",model.enquiry_type_id),
                                              new NpgsqlParameter("@remark",string.IsNullOrEmpty(model.remark) ? "":model.remark),
                                              new NpgsqlParameter("@enquiry_date",model.enquiry_date),
                                              new NpgsqlParameter("@seqid",model.seqid)

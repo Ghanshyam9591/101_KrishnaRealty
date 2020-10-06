@@ -173,6 +173,7 @@ namespace EMS.Common
         public int property_type_id { get; set; }
         public string propery_name { get; set; } = string.Empty;
         public int enquiry_source_id { get; set; }
+        public int enquiry_type_id { get; set; }
         public string enquiry_source_name { get; set; } = string.Empty;
         public int assign_to_id { get; set; }
         public string remark { get; set; } = string.Empty;

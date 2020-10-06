@@ -17,6 +17,12 @@ namespace EMS.Web.Controllers
             Common2 bll = new Common2();
             return new JsonNetResult(bll.GetPropertyTypes());
         }
+
+        public ActionResult GetEnquiryTypes()
+        {
+            Common2 bll = new Common2();
+            return new JsonNetResult(bll.GetEnquiryTypes());
+        }
         public ActionResult GetLovCategories()
         {
             Common2 bll = new Common2();

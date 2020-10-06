@@ -328,6 +328,7 @@ namespace EMS.Common
                     REM.remark = string.IsNullOrWhiteSpace(drow["remark"].ToString()) ? "" : drow["remark"].ToString();
                     REM.created_by = string.IsNullOrWhiteSpace(drow["created_by"].ToString()) ? 0 : Convert.ToInt32(drow["created_by"]);
                     REM.created_date = string.IsNullOrWhiteSpace(drow["created_date"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["created_date"]);
+                    REM.enquiry_type_id = string.IsNullOrWhiteSpace(drow["enquiry_type_id"].ToString()) ? 0 : Convert.ToInt32(drow["enquiry_type_id"]);
                     REM.enquiry_date = string.IsNullOrWhiteSpace(drow["enquiry_date"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["enquiry_date"]);
                     REM.assign_to_id = string.IsNullOrWhiteSpace(drow["assign_to_id"].ToString()) ? 0 : Convert.ToInt32(drow["assign_to_id"]);
                     REM_LIST2.Add(REM);

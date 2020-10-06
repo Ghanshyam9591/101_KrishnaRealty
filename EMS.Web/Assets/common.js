@@ -2,9 +2,12 @@
     this.getPropertyTypes = function () {
         return $http.get('/Common/GetPropertytypes/');
     },
+    this.getEnquiryTypes = function () {
+        return $http.get('/Common/GetEnquiryTypes/');
+    },
      this.getLovCategories = function () {
          return $http.get('/Common/GetLovCategories/');
-    },
+     },
     this.getActionTypes = function () {
         return $http.get('/Common/GetActionTypes/');
     },

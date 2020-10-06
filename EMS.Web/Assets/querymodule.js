@@ -1,4 +1,4 @@
-﻿app.controller("QueryModule", ["$scope", "QueryModuleFactory", "$timeout", "$location", "$window","CommonFactory", function ($scope, QueryModuleFactory, $timeout, $location, $window,CommonFactory) {
+﻿app.controller("QueryModule", ["$scope", "QueryModuleFactory", "$timeout", "$location", "$window", "CommonFactory", function ($scope, QueryModuleFactory, $timeout, $location, $window, CommonFactory) {
     $scope.isAssignBatchStart = false;
     $scope.isAssignBtnHide = true;
     $scope.searchButtonText = "Search";
@@ -101,7 +101,7 @@
             alert(success.data);
         });
     }
-    $scope.GetGridRecord = function (cust_id, location_id, enquiry_source_id, enquiry_from, enquiry_to, action_type_id) {
+    $scope.GetGridRecord = function (cust_id, location_id, enquiry_source_id, enquiry_from, enquiry_to, action_type_id,enquiry_type_id) {
         debugger;
         if (cust_id === undefined)
             cust_id = 0;
@@ -111,11 +111,13 @@
             enquiry_source_id = 0;
         if (action_type_id === undefined)
             action_type_id = 0;
+        if (enquiry_type_id === undefined)
+            enquiry_type_id = 0;
 
         $scope.searchButtonText = "Searching";
         $scope.asOnDate = new Date(new Date().setHours(0, 0, 0, 0));
         //$scope.queryParam.enquiry_date = new Date(new Date("1900-01-01").setHours(0, 0, 0, 0));
-        QueryModuleFactory.getGridDetail(cust_id, location_id, enquiry_source_id, enquiry_from, enquiry_to, action_type_id).then(function (success) {
+        QueryModuleFactory.getGridDetail(cust_id, location_id, enquiry_source_id, enquiry_from, enquiry_to, action_type_id, enquiry_type_id).then(function (success) {
             $scope.searchButtonText = "Search";
             $scope.query_data = success.data;
             if (success.data.length > 0) {
@@ -139,7 +141,8 @@
             $scope.enquiry_sources = success[0].data;
             $scope.locations = success[1].data;
             $scope.action_types = success[2].data;
-            $scope.queryParam = [{ "cust_name": "", "cust_id": 0, "location_id": 0, "enquiry_source_id": 0, "enquiry_from": "", "enquiry_to": "", "action_type_id": 0, "query_type": "" }];
+            $scope.enquiry_types = success[3].data;
+            $scope.queryParam = [{ "cust_name": "", "enquiry_type_id": 0, "cust_id": 0, "location_id": 0, "enquiry_source_id": 0, "enquiry_from": "", "enquiry_to": "", "action_type_id": 0, "query_type": "" }];
 
             //$scope.queryParam.CLAIM_TYPE = $scope.claimTypes[0]; // Select as default value.
             //$scope.queryParam.CLAIM_STATUS = $scope.recordStatus[0]; // Select as default value.
@@ -154,13 +157,14 @@ app.factory("QueryModuleFactory", ["$rootScope", "CommonFactory", "$http", "$q",
         $q.all([
              CommonFactory.getEnquirySources(),
            CommonFactory.getlocations(),
-           CommonFactory.getActionTypes()
+           CommonFactory.getActionTypes(),
+           CommonFactory.getEnquiryTypes()
         ]).then(function (msg) {
             success(msg);
         }, failure);
     }
-    this.getGridDetail = function (cust_id, location_id, enquiry_source_id, enquiry_from, enquiry_to, action_type_id) {
-        return $http.post(('/QueryModule/GetGridDetail/'), { cust_id: cust_id, location_id: location_id, enquiry_source_id: enquiry_source_id, enquiry_from: enquiry_from, enquiry_to: enquiry_to, action_type_id: action_type_id });
+    this.getGridDetail = function (cust_id, location_id, enquiry_source_id, enquiry_from, enquiry_to, action_type_id, enquiry_type_id) {
+        return $http.post(('/QueryModule/GetGridDetail/'), { cust_id: cust_id, location_id: location_id, enquiry_source_id: enquiry_source_id, enquiry_from: enquiry_from, enquiry_to: enquiry_to, action_type_id: action_type_id, enquiry_type_id: enquiry_type_id });
     }
     this.getClaimType = function () {
         return $http.get('/QueryModule/GetDetails/');

@@ -2,6 +2,54 @@
     ViewBag.Title = "Flat Owner";
 }
 
+<style>
+    .panel {
+        margin-bottom: 20px;
+        background-color: #fff;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+
+    .panel-primary {
+        border-color: #337ab7;
+    }
+
+        .panel-primary > .panel-heading {
+            color: #fff;
+            background-color: #337ab7;
+            border-color: #337ab7;
+        }
+
+    .panel-heading {
+        /*padding: 2px 5px;*/
+        border-bottom: 1px solid transparent;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+    }
+
+    fieldset.scheduler-border {
+        border: 1px groove #ddd !important;
+        padding: 0 1.4em 1.4em 1.4em !important;
+        margin: 0 0 1.5em 0 !important;
+        -webkit-box-shadow: 0px 0px 0px 0px #000;
+        box-shadow: 0px 0px 0px 0px #000;
+    }
+
+    legend.scheduler-border {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width: auto;
+        padding: 0 10px;
+        border-bottom: none;
+    }
+</style>
+@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
+
+@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+
 <div class="col-md-12 p-0">
     <ul class="nav">
         <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
@@ -11,103 +59,103 @@
 
 </div>
 <br />
+
 <div ng-app="myApp" ng-controller="FlatOwners">
     <form>
-        <div class="panel panel-primary">
-            <div class="panel-heading">Panel heading without title</div>
-            <hr />
-            <div class="panel-body">
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="">Name</label>
-                        <input type="text" class="form-control" ng-model="model.name" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="">Mobile-1</label>
-                        <input type="text" class="form-control" ng-model="model.mobile1" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="">Mobile-2</label>
-                        <input type="text" class="form-control" ng-model="model.mobile2" />
-                    </div>
-                    <div class="form-group col-md-3">
-                        <label for="">email</label>
-                        <input type="text" class="form-control" ng-model="model.email" />
-                    </div>
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Owner Detail</legend>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="">Name</label>
+                    <input type="text" class="form-control" ng-model="model.name" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Mobile-1</label>
+                    <input type="text" class="form-control" ng-model="model.mobile1" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Mobile-2</label>
+                    <input type="text" class="form-control" ng-model="model.mobile2" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">email</label>
+                    <input type="text" class="form-control" ng-model="model.email" />
                 </div>
             </div>
+        </fieldset>
+        <fieldset class="scheduler-border">
+            <legend class="scheduler-border">Renter Detail</legend>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="">Name</label>
+                    <input type="text" class="form-control" ng-model="model.renter_name" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Mobile-1</label>
+                    <input type="text" class="form-control" ng-model="model.mobile1" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Mobile-2</label>
+                    <input type="text" class="form-control" ng-model="model.mobile2" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">email</label>
+                    <input type="text" class="form-control" ng-model="model.email" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="">Deposit</label>
+                    <input type="text" class="form-control" ng-model="model.deposit" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Monthly_Rent</label>
+                    <input type="text" class="form-control" ng-model="model.monthly_rent" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Property_Type</label>
+                    <select ng-model="model.property_type_id" id="property_type_id" ng-options="x.SeqID as x.Name for x in property_types" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Location</label>
+                    <select ng-model="model.location_id" id="location_id" ng-options="x.SeqID as x.Name for x in locations" class="form-control"></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="">Building </label>
+                    <select ng-model="model.building_id" id="building_id" ng-options="x.SeqID as x.Name for x in buildings" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Flat No</label>
+                    <input type="text" class="form-control" ng-model="model.flat_no" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Duration_From</label>
+                    <input type="date" class="form-control" ng-model="model.duration_from" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="">Duration_To</label>
+                    <input type="date" class="form-control" ng-model="model.duration_to" />
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="">Remark</label>
+                    <input type="text" class="form-control" ng-model="model.remark" />
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary" ng-click="save(model)">Submit</button>
+                    <a href="/FlatOwners" class="btn btn-primary">Back</a>
+                </div>
+            </div>
+        </fieldset>
 
-        </div>
-        <hr />
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="">Name</label>
-                <input type="text" class="form-control" ng-model="model.renter_name" />
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Mobile-1</label>
-                <input type="text" class="form-control" ng-model="model.mobile1" />
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Mobile-2</label>
-                <input type="text" class="form-control" ng-model="model.mobile2" />
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">email</label>
-                <input type="text" class="form-control" ng-model="model.email" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="">Deposit</label>
-                <input type="text" class="form-control" ng-model="model.deposit" />
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Monthly_Rent</label>
-                <input type="text" class="form-control" ng-model="model.monthly_rent" />
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Property_Type</label>
-                <select ng-model="model.property_type_id" id="property_type_id" ng-options="x.SeqID as x.Name for x in property_types" class="form-control"></select>
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Location</label>
-                <select ng-model="model.location_id" id="location_id" ng-options="x.SeqID as x.Name for x in locations" class="form-control"></select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-3">
-                <label for="">Building </label>
-                <select ng-model="model.building_id" id="building_id" ng-options="x.SeqID as x.Name for x in buildings" class="form-control"></select>
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Flat No</label>
-                <input type="text" class="form-control" ng-model="model.flat_no" />
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Duration_From</label>
-                <input type="date" class="form-control" ng-model="model.duration_from" />
-            </div>
-            <div class="form-group col-md-3">
-                <label for="">Duration_To</label>
-                <input type="date" class="form-control" ng-model="model.duration_to" />
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="">Remark</label>
-                <input type="text" class="form-control" ng-model="model.remark" />
-            </div>
-            <div class="form-group col-md-6">
-                <button type="submit" class="btn btn-primary" ng-click="save(model)">Submit</button>
-                <a href="/FlatOwners" class="btn btn-primary">Back</a>
-            </div>
-        </div>
         @*<div class="form-group row">
-            <div class="col-sm-5">
-                <button type="submit" class="btn btn-primary" ng-click="save(model)">Submit</button>
-                <a href="/FlatOwners" class="btn btn-primary">Back</a>
-            </div>
-        </div>*@
+                <div class="col-sm-5">
+                    <button type="submit" class="btn btn-primary" ng-click="save(model)">Submit</button>
+                    <a href="/FlatOwners" class="btn btn-primary">Back</a>
+                </div>
+            </div>*@
     </form>
 </div>

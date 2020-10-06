@@ -17,10 +17,10 @@ namespace EMS.Web.Controllers
         {
             return View();
         }
-        public ActionResult GetGridDetail(int cust_id, int location_id, int enquiry_source_id, string enquiry_from,string enquiry_to, int action_type_id, string query_type)
+        public ActionResult GetGridDetail(int cust_id, int location_id, int enquiry_source_id, string enquiry_from,string enquiry_to, int action_type_id, string query_type,int enquiry_type_id)
         {
             QueryModule bll = new QueryModule();
-            return new JsonNetResult(bll.GetGridDetail(cust_id, location_id, enquiry_source_id, enquiry_from,enquiry_to, action_type_id, query_type));
+            return new JsonNetResult(bll.GetGridDetail(cust_id, location_id, enquiry_source_id, enquiry_from,enquiry_to, action_type_id, query_type, enquiry_type_id));
         }
         public ActionResult AddComment(Int64 Enquiry_No, Int64 Action_Type_ID, string Comment)
         {

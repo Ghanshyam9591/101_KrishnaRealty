@@ -12,7 +12,7 @@ namespace EMS.Web.Models
 {
     public class QueryModule : EntityBusinessLogicBase<QueryModule>
     {
-        public List<QueryModelRPT> GetGridDetail(int cust_id, int location_id, int enquiry_source_id, string enquiry_from, string enquiry_to, int action_type_id, string query_type)
+        public List<QueryModelRPT> GetGridDetail(int cust_id, int location_id, int enquiry_source_id, string enquiry_from, string enquiry_to, int action_type_id, string query_type,int enquiry_type_id)
         {
             List<QueryModelRPT> RPM_LIST = new List<QueryModelRPT>();
             StringBuilder sb = new StringBuilder();
@@ -28,6 +28,10 @@ namespace EMS.Web.Models
             if (enquiry_source_id != 0)
             {
                 sb.AppendLine(" and et.enquiry_source_id=" + enquiry_source_id + "");
+            }
+            if (enquiry_type_id != 0)
+            {
+                sb.AppendLine(" and et.enquiry_type_id=" + enquiry_type_id + "");
             }
             if (!string.IsNullOrEmpty(enquiry_from) && !string.IsNullOrEmpty(enquiry_to))
             {

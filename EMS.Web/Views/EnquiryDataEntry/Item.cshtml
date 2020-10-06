@@ -16,6 +16,10 @@
     <form>
         <div class="form-row">
             <div class="form-group col-md-3">
+                <label for="">Enquiry Type</label>
+                <select ng-model="model.enquiry_type_id" id="enquiry_type_id" ng-options="x.SeqID as x.Name for x in enquiry_types" class="form-control"></select>
+            </div>
+            <div class="form-group col-md-3">
                 <label for="">Name</label>
                 <input type="text" class="form-control" ng-model="model.name" />
             </div>
@@ -27,30 +31,33 @@
                 <label for="">Mobile-2</label>
                 <input type="text" class="form-control" ng-model="model.mobile2" />
             </div>
+            
+        </div>
+        <div class="form-row">
             <div class="form-group col-md-3">
                 <label for="">email</label>
                 <input type="text" class="form-control" ng-model="model.email" />
             </div>
-        </div>
-        <div class="form-row">
             <div class="form-group col-md-3">
                 <label for="">Location</label>
                 <select ng-model="model.location_id" id="location_id" ng-options="x.SeqID as x.Name for x in locations" class="form-control"></select>
             </div>
             <div class="form-group col-md-3">
-                <label for="">Cost-Upto(Lakhs)</label>
+                <label for="">Cost-Upto(Lakhs)/Rent</label>
                 <input type="text" class="form-control" ng-model="model.cost_upto" />
             </div>
             <div class="form-group col-md-3">
                 <label for="">Property Type</label>
                 <select ng-model="model.property_type_id" id="property_type_id" ng-options="x.SeqID as x.Name for x in property_types" class="form-control"></select>
             </div>
+           
+        </div>
+        <div class="form-row">
+            
             <div class="form-group col-md-3">
                 <label for="">Enquiry Source</label>
                 <select ng-model="model.enquiry_source_id" id="enquiry_source_id" ng-options="x.SeqID as x.Name for x in enquiry_sources" class="form-control"></select>
             </div>
-        </div>
-        <div class="form-row">
             <div class="form-group col-md-3">
                 <label for="">Enquiry Date</label>
                 <input type="date" class="form-control" ng-model="model.enquiry_date" />

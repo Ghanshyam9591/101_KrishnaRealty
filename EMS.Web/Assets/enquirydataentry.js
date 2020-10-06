@@ -33,7 +33,12 @@ app.controller("EnquiryDataEntry", ["$scope", "EnquiryDataEntryFactory", "$timeo
         debugger;
         EnquiryDataEntryFactory.save(model).then(function (success) {
             alert(success.data);
-            $window.location.reload();
+            if (model.seqid > 0) {
+                window.location.href = window.location.origin + '/EnquiryDataEntry';
+            }
+            else {
+                $window.location.reload();
+            }
         });
     };
 
@@ -49,6 +54,7 @@ app.controller("EnquiryDataEntry", ["$scope", "EnquiryDataEntryFactory", "$timeo
             $scope.property_types = success[1].data;
             $scope.enquiry_sources = success[2].data;
             $scope.locations = success[3].data;
+            $scope.enquiry_types = success[4].data;
         });
 }]);
 app.factory("EnquiryDataEntryFactory", ["$rootScope", "$http", "$q", "CommonFactory", function ($rootScope, $http, $q, CommonFactory) {
@@ -62,7 +68,8 @@ app.factory("EnquiryDataEntryFactory", ["$rootScope", "$http", "$q", "CommonFact
            this.getItem(id),
            CommonFactory.getPropertyTypes(),
            CommonFactory.getEnquirySources(),
-           CommonFactory.getlocations()
+           CommonFactory.getlocations(),
+           CommonFactory.getEnquiryTypes()
         ]).then(function (msg) {
             success(msg);
         }, failure);

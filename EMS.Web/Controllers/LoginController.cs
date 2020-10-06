@@ -26,6 +26,7 @@ namespace EMS.Web.Controllers
             if (objmodel != null)
             {
                 Session["UserDetails"] = objmodel;
+                Session["LoggedInUser"] = objmodel.employee_name;
                 Common2 cm2 = new Common2();
                 List<MenusModel> menus = cm2.GetMenus();
                 Session["MenuList"] = menus;
