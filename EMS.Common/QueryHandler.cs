@@ -367,7 +367,7 @@ namespace EMS.Common
                     REM.mobile1 = string.IsNullOrWhiteSpace(drow["flat_owner_mobile1"].ToString()) ? "" : drow["flat_owner_mobile1"].ToString();
                     REM.mobile2 = string.IsNullOrWhiteSpace(drow["flat_owner_mobile2"].ToString()) ? "" : drow["flat_owner_mobile2"].ToString();
                     REM.email = string.IsNullOrWhiteSpace(drow["flat_owner_email"].ToString()) ? "" : drow["flat_owner_email"].ToString();
-
+                    REM.renter_seqid = string.IsNullOrWhiteSpace(drow["renter_seqid"].ToString()) ? 0 : Convert.ToInt32(drow["renter_seqid"]);
                     REM.renter_name = string.IsNullOrWhiteSpace(drow["renter_name"].ToString()) ? "" : drow["renter_name"].ToString();
                     REM.renter_mobile1 = string.IsNullOrWhiteSpace(drow["renter_mobile1"].ToString()) ? "" : drow["renter_mobile1"].ToString();
                     REM.renter_mobile2 = string.IsNullOrWhiteSpace(drow["renter_mobile2"].ToString()) ? "" : drow["renter_mobile2"].ToString();
@@ -380,6 +380,8 @@ namespace EMS.Common
                     REM.location_id = string.IsNullOrWhiteSpace(drow["location_id"].ToString()) ? 0 : Convert.ToInt32(drow["location_id"]);
                     REM.building_id = string.IsNullOrWhiteSpace(drow["building_id"].ToString()) ? 0 : Convert.ToInt32(drow["building_id"]);
                     REM.flat_no = string.IsNullOrWhiteSpace(drow["flat_no"].ToString()) ? "" : drow["flat_no"].ToString();
+                    REM.duration_from = string.IsNullOrWhiteSpace(drow["duration_from"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["duration_from"]);
+                    REM.duration_to = string.IsNullOrWhiteSpace(drow["duration_to"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["duration_to"]);
                     REM.remark = string.IsNullOrWhiteSpace(drow["renter_remark"].ToString()) ? "" : drow["renter_remark"].ToString();
                     //REM.created_by = string.IsNullOrWhiteSpace(drow["created_by"].ToString()) ? 0 : Convert.ToInt32(drow["created_by"]);
                     //REM.created_date = string.IsNullOrWhiteSpace(drow["created_date"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["created_date"]);
@@ -475,6 +477,63 @@ namespace EMS.Common
                         RECORDED_ERR_LIST.Add(RException);
                     }
                 }
+
+            }
+            return REM_LIST2;
+        }
+
+        public static List<RentalQueryModuleModel> GetRentalQueryModuleGRDData(DataTable DT)
+        {
+            List<RentalQueryModuleModel> REM_LIST2 = new List<RentalQueryModuleModel>();
+
+
+            int RecordCount = 0;
+            foreach (DataRow drow in DT.Rows)
+            {
+                RecordCount++;
+                RentalQueryModuleModel REM = new RentalQueryModuleModel();
+                try
+                {
+
+                    REM.seqid = string.IsNullOrWhiteSpace(drow["owner_seqid"].ToString()) ? 0 : Convert.ToInt32(drow["owner_seqid"]);
+                    REM.name = string.IsNullOrWhiteSpace(drow["owner_name"].ToString()) ? "" : drow["owner_name"].ToString();
+                    REM.mobile1 = string.IsNullOrWhiteSpace(drow["owner_mobile1"].ToString()) ? "" : drow["owner_mobile1"].ToString();
+                    REM.mobile2 = string.IsNullOrWhiteSpace(drow["owner_mobile2"].ToString()) ? "" : drow["owner_mobile2"].ToString();
+                    REM.email = string.IsNullOrWhiteSpace(drow["owner_email"].ToString()) ? "" : drow["owner_email"].ToString();
+                    REM.renter_seqid = string.IsNullOrWhiteSpace(drow["renter_seqid"].ToString()) ? 0 : Convert.ToInt32(drow["renter_seqid"]);
+                    REM.renter_name = string.IsNullOrWhiteSpace(drow["renter_name"].ToString()) ? "" : drow["renter_name"].ToString();
+                    REM.renter_mobile1 = string.IsNullOrWhiteSpace(drow["renter_mobile1"].ToString()) ? "" : drow["renter_mobile1"].ToString();
+                    REM.renter_mobile2 = string.IsNullOrWhiteSpace(drow["renter_mobile2"].ToString()) ? "" : drow["renter_mobile2"].ToString();
+                    REM.renter_email = string.IsNullOrWhiteSpace(drow["renter_email"].ToString()) ? "" : drow["renter_email"].ToString();
+
+                    REM.location_name = string.IsNullOrWhiteSpace(drow["location_name"].ToString()) ? "" : drow["location_name"].ToString();
+                    REM.deposit = string.IsNullOrWhiteSpace(drow["deposit"].ToString()) ? 0 : Convert.ToDecimal(drow["deposit"]);
+                    REM.monthly_rent = string.IsNullOrWhiteSpace(drow["monthly_rent"].ToString()) ? 0 : Convert.ToDecimal(drow["monthly_rent"]);
+                    REM.propery_name = string.IsNullOrWhiteSpace(drow["property_type"].ToString()) ? "" : drow["property_type"].ToString();
+                    REM.building_name = string.IsNullOrWhiteSpace(drow["building"].ToString()) ? "" : drow["building"].ToString();
+                    REM.flat_no = string.IsNullOrWhiteSpace(drow["flat_no"].ToString()) ? "" : drow["flat_no"].ToString();
+                    REM.duration_from = string.IsNullOrWhiteSpace(drow["duration_from"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["duration_from"]);
+                    REM.duration_to = string.IsNullOrWhiteSpace(drow["duration_to"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["duration_to"]);
+                    REM.agreement_expire_inmonth = string.IsNullOrWhiteSpace(drow["agreement_expire_inmonth"].ToString()) ? 0 : Convert.ToInt32(drow["agreement_expire_inmonth"]);
+                    REM.agreement_expire_indays = string.IsNullOrWhiteSpace(drow["agreement_expire_indays"].ToString()) ? 0 : Convert.ToInt32(drow["agreement_expire_indays"]);
+                    REM.remark = string.IsNullOrWhiteSpace(drow["renter_remark"].ToString()) ? "" : drow["renter_remark"].ToString();
+                    REM.css_class = string.IsNullOrWhiteSpace(drow["css_class"].ToString()) ? "" : drow["css_class"].ToString();
+                    //REM.created_by = string.IsNullOrWhiteSpace(drow["created_by"].ToString()) ? 0 : Convert.ToInt32(drow["created_by"]);
+                    //REM.created_date = string.IsNullOrWhiteSpace(drow["created_date"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["created_date"]);
+                    // REM.enquiry_date = string.IsNullOrWhiteSpace(drow["enquiry_date"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["enquiry_date"]);
+                    REM_LIST2.Add(REM);
+
+                }
+                catch (Exception ex)
+                {
+                    if (RecordCount < 1)
+                    {
+                        RecordException RException = new RecordException();
+                        RException.ERR_MSG = ex.Message;
+                        RECORDED_ERR_LIST.Add(RException);
+                    }
+                }
+
 
             }
             return REM_LIST2;

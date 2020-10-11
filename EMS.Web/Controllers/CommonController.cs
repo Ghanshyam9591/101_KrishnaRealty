@@ -64,5 +64,20 @@ namespace EMS.Web.Controllers
             Common2 bll = new Common2();
             return new JsonNetResult(bll.GetCustomers(q));
         }
+        public ActionResult GetOwners(string q)
+        {
+            Common2 bll = new Common2();
+            return new JsonNetResult(bll.GetOwners(q));
+        }
+        public ActionResult GetRenters(string q)
+        {
+            Common2 bll = new Common2();
+            return new JsonNetResult(bll.GetRenters(q));
+        }
+        public ActionResult GetBuildings()
+        {
+            Common2 bll = new Common2();
+            return new JsonNetResult(bll.GetBuildings());
+        }
     }
 }

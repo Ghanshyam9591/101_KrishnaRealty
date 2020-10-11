@@ -34,7 +34,8 @@ namespace EMS.Web
                       "~/Assets/flatowners.js",
 					  "~/Assets/roleMenuMapping.js",
                       "~/Assets/lovcategory.js",
-                      "~/Assets/lov.js"));
+                      "~/Assets/lov.js",
+                      "~/Assets/rentalquerymodule.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

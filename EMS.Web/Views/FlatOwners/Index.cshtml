@@ -21,10 +21,14 @@
             <thead>
                 <tr style="background-color:darkgrey">
                     <th>SrNo</th>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>Mobile</th>
-                    <th>Email</th>
+                    <th>Owner_Name</th>
+                    <th>Owner_Mobile1</th>
+                    <th>Owner_Mobile2</th>
+                    <th>Owner_Email</th>
+                    @*<th>Renter_Name</th>*@
+                    @*<th>Renter_Mobile1</th>
+                    <th>Renter_Mobile2</th>
+                    <th>Renter_Email</th>*@
                     <th>IsActive</th>
                 </tr>
             </thead>
@@ -35,6 +39,11 @@
                     <td>{{item.mobile1}} </td>
                     <td>{{item.mobile2}} </td>
                     <td>{{item.email}}</td>
+                    @*<td>{{item.Renter_Name}}</td>
+                    <td>{{item.Renter_Mobile1}}</td>
+                    <td>{{item.Renter_Mobile2}}</td>
+                    <td>{{item.Renter_Email}}</td>*@
+                    <td>{{item.is_active}}</td>
                 </tr>
             </tbody>
         </table>

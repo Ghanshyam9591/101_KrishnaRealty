@@ -1,0 +1,163 @@
+﻿@{
+    ViewBag.Title = "Rental Query Module";
+}
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
+<style>
+    /*label {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        text-align: center;
+        width: 150px;
+        line-height: 20px;
+        margin-bottom: 10px;
+    }*/
+
+    .btn-primary {
+        color: #fff;
+        background-color: #383095;
+        border-color: #383095;
+    }
+
+    .btnPosition {
+        margin-bottom: 30px;
+    }
+
+    .box {
+        /*width: 150px;
+          height: 150px;*/
+        opacity: 3;
+        position: absolute;
+        top: 68px;
+        left: 35px;
+        z-index: 3;
+    }
+</style>
+<div class="col-md-12 p-0">
+    <ul class="nav">
+        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+        <li class="nav-item"> <a class="nav-link" href="#">Rental Query Module</a> </li>
+    </ul>
+    <hr class="m-0">
+</div>
+
+<br />
+<div ng-app="myApp" ng-controller="RentalQueryModule">
+    <div>
+        <form>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Search By</label>
+                    <select ng-model="QueryType" id="quuery_type_id" ng-options="x.Name for x in queryTypes" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Owner Name</label>
+                    <input type="text" name="customer" id="customer" ng-model="customer" ng-keyup="complete(customer)" class="form-control" ng-disabled="isowner" />
+                    <ul class="list-group box" style="overflow:auto;">
+                        <li class="list-group-item" ng-repeat="item in filterCustomer" ng-click="fillTextbox(item,filterCustomer,customer)">{{item}}</li>
+                    </ul>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Renter Name</label>
+                    <input type="text" name="Renter" id="Renter" ng-model="Renter" ng-keyup="complete2(Renter)" class="form-control" ng-disabled="isrenter" />
+                    <ul class="list-group box" style="overflow:auto;">
+                        <li class="list-group-item" ng-repeat="item in filterCustomer2" ng-click="fillTextbox2(item,filterCustomer,Renter)">{{item}}</li>
+                    </ul>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Location</label>
+                    <select ng-model="queryParam.location_id" id="location_id" ng-options="x.SeqID as x.Name for x in locations" class="form-control"></select>
+                </div>
+
+
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Building</label>
+                    <select ng-model="queryParam.building_id" id="building_id" ng-options="x.SeqID as x.Name for x in buildings" class="form-control"></select>
+                </div>
+                <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-primary" ng-click="GetGridRecord(val_owner_code,val_renter_code, queryParam.location_id, queryParam.building)">
+                        <span ng-show="searchButtonText == 'Searching'">
+                            <img style="width:20px;height:20px;" src="~/images/loader.gif" />
+                        </span>
+                        {{ searchButtonText }}
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>Sr.No</th>
+                    <th>owner_name_______________________</th>
+                    <th>owner_mobile1</th>
+                    <th>owner_mobile2</th>
+                    <th>owner_email </th>
+                    <th>renter_name______________________ </th>
+                    <th>renter_mobile1 </th>
+                    <th>renter_mobile2</th>
+                    <th>renter_email</th>
+                    <th>location_name</th>
+                    <th>building</th>
+                    <th>property_type</th>
+                    <th>flat_no</th>
+                    <th>deposit</th>
+                    <th>monthly_rent</th>
+                    <th>duration_from_</th>
+                    <th>duration_to__</th>
+                    <th>agreement_expire_inmonth</th>
+                    <th>agreement_expire_indays</th>
+                    <th>Renter_Remark</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in query_data track by $index" style="background-color:{{item.css_class}}">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.mobile1}}</td>
+                    <td>{{item.mobile2}}</td>
+                    <td>{{item.email}}</td>
+                    <td>{{item.renter_name}}</td>
+                    <td>{{item.renter_mobile1}}</td>
+                    <td>{{item.renter_mobile2}}</td>
+                    <td>{{item.renter_email}}</td>
+                    <td>{{item.location_name}}</td>
+                    <td>{{item.building}}</td>
+                    <td>{{item.property_type}}</td>
+                    <td>{{item.flat_no}}</td>
+                    <td>{{item.deposit}}</td>
+                    <td>{{item.monthly_rent}}</td>
+                    <td>{{item.duration_from | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{item.duration_to | date:'dd-MMM-yyyy'}}</td>
+                    <td>{{item.agreement_expire_inmonth}}</td>
+                    <td>{{item.agreement_expire_indays}}</td>
+                    <td>{{item.Renter_Remark}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#exportSubmit").click(function () {
+
+            debugger;
+            var AsOnDate = $("#AS_ON_DATE").val();
+            var ClaimType = $("#CLAIM_TYPE").val();
+
+            if (ClaimType == "?") {
+                ClaimType = "";
+            }
+
+            $("#exportData input[name=AsOnDate]").val(AsOnDate);
+            $("#exportData input[name=ClaimType]").val(ClaimType);
+            $("#exportData").submit();
+
+        })
+    });
+</script>

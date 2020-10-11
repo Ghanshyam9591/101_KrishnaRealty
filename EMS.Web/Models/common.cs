@@ -99,6 +99,13 @@ namespace EMS.Web.Models
             ListModel = bll.FILE_DROPDOWN_LIST(GetQuery.DDL_GET_USERS, null);
             return ListModel;
         }
+        public List<DDLModel> GetBuildings()
+        {
+            ListModel = new List<DDLModel>();
+            DDLModel ddlobj = new DDLModel();
+            ListModel = bll.FILE_DROPDOWN_LIST(GetQuery.DDL_GET_BUILDINGS, null);
+            return ListModel;
+        }
         public List<DDLModel2> GetCustomers(string q)
         {
             NpgsqlParameter[] param = {
@@ -107,6 +114,28 @@ namespace EMS.Web.Models
             List<DDLModel2> ListModel2 = new List<DDLModel2>();
             DDLModel2 ddlobj = new DDLModel2();
             ListModel2 = bll.FEEL_DROPDOWNLIST_FOR_EMP("select distinct seqid, name from ems_tbl_enquiry_trans where lower(name) like lower('%" + q + "%')", "name", null);
+            return ListModel2;
+        }
+
+        public List<DDLModel2> GetOwners(string q)
+        {
+            NpgsqlParameter[] param = {
+                new NpgsqlParameter("@emp_name",q)
+            };
+            List<DDLModel2> ListModel2 = new List<DDLModel2>();
+            DDLModel2 ddlobj = new DDLModel2();
+            ListModel2 = bll.FEEL_DROPDOWNLIST_FOR_EMP("select distinct seqid, name from ems_tbl_flatowners where lower(name) like lower('%" + q + "%')", "name", null);
+            return ListModel2;
+        }
+
+        public List<DDLModel2> GetRenters(string q)
+        {
+            NpgsqlParameter[] param = {
+                new NpgsqlParameter("@emp_name",q)
+            };
+            List<DDLModel2> ListModel2 = new List<DDLModel2>();
+            DDLModel2 ddlobj = new DDLModel2();
+            ListModel2 = bll.FEEL_DROPDOWNLIST_FOR_EMP("select distinct seqid, name from rms_tbl_renter_trans where lower(name) like lower('%" + q + "%')", "name", null);
             return ListModel2;
         }
 

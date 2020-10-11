@@ -236,6 +236,14 @@ namespace EMS.Common
                          inner join ems_tbl_lov lov on lov.category_id =lc.id where lc.code='#ENQSRC#' and lc.is_active=true";
             }
         }
+        public static string DDL_GET_BUILDINGS
+        {
+            get
+            {
+                return @"select lov.id,lov.name from ems_tbl_lov_category lc
+                         inner join ems_tbl_lov lov on lov.category_id =lc.id where lc.code='#BUILDING#' and lc.is_active=true";
+            }
+        }
 
         public static string DDL_GET_LOCATIONS
         {
@@ -361,6 +369,13 @@ namespace EMS.Common
             get
             {
                 return @"select * from ems_fn_get_owner_renter_detail(:pseqid)";
+            }
+        }
+        public static string RENTAL_QUERY_MODULE_DATA_BY_PARA
+        {
+            get
+            {
+                return @"select * from ems_fn_get_rental_query_module(:plocation_id,:pbuilding_id,:powner_id,:prenter_id)";
             }
         }
         public static string QUERY_MODULE_GRID_DATA

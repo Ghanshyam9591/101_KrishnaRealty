@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ActivationTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ActivationTools\bin\Debug\ActivationTools.dll</HintPath>
+    </Reference>
     <Reference Include="ClosedXML, Version=0.95.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ClosedXML.0.95.3\lib\net40\ClosedXML.dll</HintPath>
       <Private>True</Private>
@@ -266,6 +270,7 @@
     <Compile Include="Controllers\MenuRoleMapController.cs" />
     <Compile Include="Controllers\EnquiryController.cs" />
     <Compile Include="Controllers\QueryModuleController.cs" />
+    <Compile Include="Controllers\RentalQueryModuleController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -294,6 +299,7 @@
     <Compile Include="Models\Equiry.cs" />
     <Compile Include="Models\QueryModule.cs" />
     <Compile Include="Models\RecordException.cs" />
+    <Compile Include="Models\RentalQueryModule.cs" />
     <Compile Include="Models\RevisedExpenseModel.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\User.cs" />
@@ -317,6 +323,7 @@
     <Content Include="Assets\enquiry.js" />
     <Content Include="Assets\querymodule.js" />
     <Content Include="Assets\releasingOfPayment.js" />
+    <Content Include="Assets\rentalquerymodule.js" />
     <Content Include="Assets\role.js" />
     <Content Include="Assets\roleMenuMapping.js" />
     <Content Include="Assets\sapdata.js" />
@@ -1304,6 +1311,7 @@
     <Content Include="Views\LovCategory\Item.cshtml" />
     <Content Include="Views\Lov\Index.cshtml" />
     <Content Include="Views\Lov\Item.cshtml" />
+    <Content Include="Views\RentalQueryModule\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

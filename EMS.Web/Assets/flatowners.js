@@ -30,7 +30,12 @@ app.controller("FlatOwners", ["$scope", "FlatOwnersFactory", "$timeout", "$locat
         debugger;
         FlatOwnersFactory.save(model).then(function (success) {
             alert(success.data);
-            $window.location.reload();
+            if ($scope.model.seqid > 0) {
+                window.location.href = window.location.origin + '/FlatOwners';
+            }
+            else {
+                $window.location.reload();
+            }
         });
     };
 
@@ -39,12 +44,17 @@ app.controller("FlatOwners", ["$scope", "FlatOwnersFactory", "$timeout", "$locat
         function (success) {
             debugger;
             $scope.model = success[0].data;
-            if ($scope.model.ID > 0)
-                $scope.model.enquiry_date = new Date($scope.model.enquiry_date);
-            else
-                $scope.model.enquiry_date = new Date(new Date().setHours(0, 0, 0, 0));
+            if ($scope.model.seqid > 0) {
+                $scope.model.duration_from = new Date($scope.model.duration_from);
+                $scope.model.duration_to = new Date($scope.model.duration_to);
+            }
+            else {
+                $scope.model.duration_from = new Date(new Date().setHours(0, 0, 0, 0));
+                $scope.model.duration_to = new Date(new Date().setHours(0, 0, 0, 0));
+            }
             $scope.property_types = success[1].data;
             $scope.locations = success[2].data;
+            $scope.buildings = success[3].data;
         });
 }]);
 app.factory("FlatOwnersFactory", ["$rootScope", "$http", "$q", "CommonFactory", function ($rootScope, $http, $q, CommonFactory) {
@@ -57,7 +67,8 @@ app.factory("FlatOwnersFactory", ["$rootScope", "$http", "$q", "CommonFactory", 
         $q.all([
            this.getItem(id),
            CommonFactory.getPropertyTypes(),
-           CommonFactory.getlocations()
+           CommonFactory.getlocations(),
+           CommonFactory.getBuildings()
         ]).then(function (msg) {
             success(msg);
         }, failure);

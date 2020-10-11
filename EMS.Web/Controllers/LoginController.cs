@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EMS.Web.Models;
 using EMS.Common;
+using ActivationTools;
 
 namespace EMS.Web.Controllers
 {
@@ -19,32 +20,35 @@ namespace EMS.Web.Controllers
         [AllowAnonymous]
         public ActionResult Index(LoginViewModel model, string returnUrl)
         {
-            
-            Login bll = new Login();
-            UserDetailsModel objmodel = bll.GetUserDetail(model.UserID,model.Password);
 
-            if (objmodel != null)
+            if (!ActivationKey.IsLock())
             {
-                Session["UserDetails"] = objmodel;
-                Session["LoggedInUser"] = objmodel.employee_name;
-                Common2 cm2 = new Common2();
-                List<MenusModel> menus = cm2.GetMenus();
-                Session["MenuList"] = menus;
+                Login bll = new Login();
+                UserDetailsModel objmodel = bll.GetUserDetail(model.UserID, model.Password);
 
-                if (!string.IsNullOrWhiteSpace(returnUrl))
+                if (objmodel != null)
                 {
-                    return Redirect(Request.Url.AbsoluteUri + returnUrl);
-                }
-                //if (!string.IsNullOrWhiteSpace(objmodel.employee_code.ToString()))
-                //{
-                //    return RedirectToAction("Index", "Home");
+                    Session["UserDetails"] = objmodel;
+                    Session["LoggedInUser"] = objmodel.employee_name;
+                    Common2 cm2 = new Common2();
+                    List<MenusModel> menus = cm2.GetMenus();
+                    Session["MenuList"] = menus;
 
-                //}
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ViewBag.errorMessage = MessageHelper.InvalidCredentials;
+                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                    {
+                        return Redirect(Request.Url.AbsoluteUri + returnUrl);
+                    }
+                    //if (!string.IsNullOrWhiteSpace(objmodel.employee_code.ToString()))
+                    //{
+                    //    return RedirectToAction("Index", "Home");
+
+                    //}
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.errorMessage = MessageHelper.InvalidCredentials;
+                }
             }
             return View();
 

@@ -28,6 +28,15 @@
     },
     this.getCustomers = function (q) {
         return $http.get(('/Common/GetCustomers/'), { params: { q: q } });
+    },
+    this.getOwners = function (q) {
+        return $http.get(('/Common/GetOwners/'), { params: { q: q } });
+    },
+     this.getRenters = function (q) {
+         return $http.get(('/Common/GetRenters/'), { params: { q: q } });
+     },
+    this.getBuildings = function () {
+        return $http.get('/Common/GetBuildings/');
     }
     return this;
 }]);

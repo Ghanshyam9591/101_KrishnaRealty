@@ -190,6 +190,7 @@ namespace EMS.Common
         public string mobile2 { get; set; }
         public string email { get; set; } = string.Empty;
 
+        public int renter_seqid { get; set; }
         public string renter_name { get; set; }
         public string renter_mobile1 { get; set; }
         public string renter_mobile2 { get; set; }
@@ -209,6 +210,39 @@ namespace EMS.Common
         public DateTime created_date { get; set; }
         public DateTime enquiry_date { get; set; }
         public bool is_active { get; set; }
+    }
+
+    public class RentalQueryModuleModel
+    {
+        public int seqid { get; set; }
+        public string name { get; set; } = string.Empty;
+        public string mobile1 { get; set; }
+        public string mobile2 { get; set; }
+        public string email { get; set; } = string.Empty;
+
+        public int renter_seqid { get; set; }
+        public string renter_name { get; set; }
+        public string renter_mobile1 { get; set; }
+        public string renter_mobile2 { get; set; }
+        public string renter_email { get; set; }
+        public string location_name { get; set; } = string.Empty;
+        public string building_name { get; set; } = string.Empty;
+        public decimal deposit { get; set; }
+        public decimal monthly_rent { get; set; }
+        public int property_type_id { get; set; }
+        public string propery_name { get; set; } = string.Empty;
+        public string remark { get; set; } = string.Empty;
+        public int building_id { get; set; }
+        public string flat_no { get; set; }
+        public DateTime duration_from { get; set; }
+        public DateTime duration_to { get; set; }
+        public int agreement_expire_inmonth { get; set; }
+        public int agreement_expire_indays { get; set; }
+        public int created_by { get; set; }
+        public DateTime created_date { get; set; }
+        public DateTime enquiry_date { get; set; }
+        public bool is_active { get; set; }
+        public string css_class { get; set; }
     }
 
     public class EnquiryStatusModel
