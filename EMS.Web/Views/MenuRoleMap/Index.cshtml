@@ -3,20 +3,28 @@
     ViewBag.Title = "Role Menu Mapping";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="#">Role Menu Mapping</a> </li>
-    </ul>
-    <hr class="m-0">
-</div>
-
+<style>
+    .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
+</style>
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Role Menu Mapping
+            <small>Preview</small>
+        </h1>
+    </section>
+</aside>
 <br />
 <form class="form-inline" ng-controller="roleMenuMapping" ng-app="myApp">
 
     <div class="form-group col-md-12 mb-2">
         <label>Role</label>
-        <select ng-model="RoleID" ng-options="item.SeqID as item.Name for item in rolelist" class="form-control col-md-2"></select>
+        <select ng-model="RoleID" ng-options="item.SeqID as item.Name for item in rolelist" class="form-control"></select>
     </div>
     <br />
     <div class="col-sm-3">
@@ -48,8 +56,6 @@
             </div>
         </div>
     </div>
-
-
 </form>
 
 

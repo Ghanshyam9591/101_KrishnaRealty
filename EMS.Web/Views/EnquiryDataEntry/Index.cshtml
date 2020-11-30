@@ -1,19 +1,44 @@
-﻿@{
-    ViewBag.Title = "Enquiry Data";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿<style>
+    .skin-black .right-side > .content-header {
+    background: transparent;
+    box-shadow: none;
+    margin-left: -232px;
 }
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="/EnquiryDataEntry/Item/0">Enquiry Data</a> </li>
-    </ul>
-    <hr class="m-0">
-</div>
-<article class="col-md-12">
-    <div class="pt-3">
-        <div class="mb-4"> <a href="/EnquiryDataEntry/Item/0" class="btn btn-secondary float-right ml-1">+</a></div>
+
+</style>
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Enquiry Data Entry
+            <small>Preview</small>
+        </h1>
+        <div class="breadcrumb">
+            <div class="mb-4"> <a href="/EnquiryDataEntry/Item/0" class="btn btn-success float-right ml-1">+</a></div>
+        </div>
+        @*<ol class="breadcrumb">
+            <li><a href="/EnquiryDataEntry/Item/0"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Enquiry Data Entry</li>
+        </ol>*@
+        @*<article class="col-md-12">
+                <div class="pt-3">
+                    <div class="mb-4"> <a href="/EnquiryDataEntry/Item/0" class="btn btn-secondary float-right ml-1">+</a></div>
+                </div>
+            </article>*@
+    </section>
+</aside>
+@*<div class="col-md-12 p-0">
+        <ul class="nav">
+            <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
+            <li class="nav-item"> <a class="nav-link" href="/EnquiryDataEntry/Item/0">Enquiry Data</a> </li>
+        </ul>
+        <hr class="m-0">
     </div>
-</article>
+    <article class="col-md-12">
+        <div class="pt-3">
+            <div class="mb-4"> <a href="/EnquiryDataEntry/Item/0" class="btn btn-secondary float-right ml-1">+</a></div>
+        </div>
+    </article>*@
 <br />
 <div ng-app="myApp" ng-controller="EnquiryDataEntryList">
     <div style="overflow:auto">

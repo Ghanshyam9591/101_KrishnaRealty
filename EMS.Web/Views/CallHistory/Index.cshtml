@@ -5,6 +5,11 @@
 }
 
 <style>
+     .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
     label {
         display: flex;
         flex-direction: row;
@@ -30,14 +35,15 @@
           z-index:3;
       }
 </style>
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="#">Customer Call History</a> </li>
-    </ul>
-    <hr class="m-0">
-</div>
-
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Customer Call History
+            <small>Preview</small>
+        </h1>
+    </section>
+</aside>
 <br />
 <div ng-app="myApp" ng-controller="CallHistory">
     <div class="container">

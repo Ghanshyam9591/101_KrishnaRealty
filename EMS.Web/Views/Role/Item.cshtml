@@ -3,26 +3,42 @@
     ViewBag.Title = "Role Master";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="/Role">Role Master</a> </li>
-    </ul>
-    <hr class="m-0">
-</div>
+<style>
+    .tooltip {
+        background-color: red;
+    }
+    .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
+</style>
 
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Role Master
+            <small>Preview</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/Home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Role Master</li>
+        </ol>
+    </section>
+</aside>
 <br />
 <form ng-app="myApp" ng-controller="Role">
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Role Code</label>
         <div class="col-sm-3">
-            <input type="text" class="form-control" ng-model="model.role_code">
+            <input type="text" class="form-control" ng-model="model.role_code" validator="[required]">
         </div>
     </div>
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Role Name</label>
         <div class="col-sm-3">
-            <input type="text" class="form-control" ng-model="model.role_name">
+            <input type="text" class="form-control" ng-model="model.role_name" validator="[required]">
         </div>
     </div>
 

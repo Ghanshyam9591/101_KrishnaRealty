@@ -87,6 +87,102 @@ namespace EMS.Common
             return REM_LIST2;
         }
 
+        public static List<DASHBOARD_DETAIL_MODEL> Getdashbordboxdetail(DataTable DT)
+        {
+            List<DASHBOARD_DETAIL_MODEL> REM_LIST2 = new List<DASHBOARD_DETAIL_MODEL>();
+
+
+            int RecordCount = 0;
+            foreach (DataRow drow in DT.Rows)
+            {
+                RecordCount++;
+                DASHBOARD_DETAIL_MODEL REM = new DASHBOARD_DETAIL_MODEL();
+                try
+                {
+                    REM.total_enquiry = string.IsNullOrWhiteSpace(drow["total_enquiry"].ToString()) ? 0 : Convert.ToInt32(drow["total_enquiry"].ToString());
+                    REM.convert_to_leads = string.IsNullOrWhiteSpace(drow["convert_to_lead"].ToString()) ? 0 : Convert.ToInt32(drow["convert_to_lead"].ToString());
+                    REM.folowups = string.IsNullOrWhiteSpace(drow["total_folowups"].ToString()) ? 0 : Convert.ToInt32(drow["total_folowups"]);
+                    REM.total_visitors = string.IsNullOrWhiteSpace(drow["total_visitors"].ToString()) ? 0 :Convert.ToInt32(drow["total_visitors"]);
+                    REM_LIST2.Add(REM);
+                }
+                catch (Exception ex)
+                {
+                    if (RecordCount < 1)
+                    {
+                        RecordException RException = new RecordException();
+                        RException.ERR_MSG = ex.Message;
+                        RECORDED_ERR_LIST.Add(RException);
+                    }
+                }
+
+            }
+            return REM_LIST2;
+        }
+
+        public static List<DASHBOARD_LOCATION_WISE_MODEL> Getdashbordlocationwise_detail(DataTable DT)
+        {
+            List<DASHBOARD_LOCATION_WISE_MODEL> REM_LIST2 = new List<DASHBOARD_LOCATION_WISE_MODEL>();
+
+
+            int RecordCount = 0;
+            foreach (DataRow drow in DT.Rows)
+            {
+                RecordCount++;
+                DASHBOARD_LOCATION_WISE_MODEL REM = new DASHBOARD_LOCATION_WISE_MODEL();
+                try
+                {
+                    REM.total_enquiry = string.IsNullOrWhiteSpace(drow["total_enquiry"].ToString()) ? 0 : Convert.ToInt32(drow["total_enquiry"].ToString());
+                    REM.convert_to_lead = string.IsNullOrWhiteSpace(drow["convert_to_lead"].ToString()) ? 0 : Convert.ToInt32(drow["convert_to_lead"].ToString());
+                    REM.folowups = string.IsNullOrWhiteSpace(drow["total_folowups"].ToString()) ? 0 : Convert.ToInt32(drow["total_folowups"]);
+                    REM.location = string.IsNullOrWhiteSpace(drow["location"].ToString()) ? "" : drow["location"].ToString();
+                    REM_LIST2.Add(REM);
+                }
+                catch (Exception ex)
+                {
+                    if (RecordCount < 1)
+                    {
+                        RecordException RException = new RecordException();
+                        RException.ERR_MSG = ex.Message;
+                        RECORDED_ERR_LIST.Add(RException);
+                    }
+                }
+
+            }
+            return REM_LIST2;
+        }
+
+        public static List<RentalQueryModuleModel> Get_rental_dashboard_detail(DataTable DT)
+        {
+            List<RentalQueryModuleModel> REM_LIST2 = new List<RentalQueryModuleModel>();
+
+
+            int RecordCount = 0;
+            foreach (DataRow drow in DT.Rows)
+            {
+                RecordCount++;
+                RentalQueryModuleModel REM = new RentalQueryModuleModel();
+                try
+                {
+                    REM.renter_name = string.IsNullOrWhiteSpace(drow["rentar_name"].ToString()) ? "" : drow["rentar_name"].ToString();
+                    REM.renter_mobile1 = string.IsNullOrWhiteSpace(drow["renter_mobile1"].ToString()) ? "" : drow["renter_mobile1"].ToString();
+                    REM.building_name = string.IsNullOrWhiteSpace(drow["building"].ToString()) ? "" : drow["building"].ToString();
+                    REM.agreement_expire_indays = string.IsNullOrWhiteSpace(drow["expire_in_day"].ToString()) ? 0 : Convert.ToInt32(drow["expire_in_day"]);
+                    REM_LIST2.Add(REM);
+                }
+                catch (Exception ex)
+                {
+                    if (RecordCount < 1)
+                    {
+                        RecordException RException = new RecordException();
+                        RException.ERR_MSG = ex.Message;
+                        RECORDED_ERR_LIST.Add(RException);
+                    }
+                }
+
+            }
+            return REM_LIST2;
+        }
+
         public static List<RoleModel> GetRoleGridList(DataTable DT)
         {
             List<RoleModel> REM_LIST2 = new List<RoleModel>();

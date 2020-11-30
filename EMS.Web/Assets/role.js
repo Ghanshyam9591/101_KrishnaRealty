@@ -32,14 +32,16 @@ app.factory("RoleListFactory", ["$rootScope", "$http", "$q", "CommonFactory", fu
 }]);
 
 
-app.controller("Role", ["$scope", "RoleFactory", "$timeout", "$location", "$window", function ($scope, RoleFactory, $timeout, $location, $window) {
+app.controller("Role", ["$scope", "RoleFactory", "$timeout", "$location", "$validator", "$window", function ($scope, RoleFactory, $timeout, $location, $validator, $window) {
 
 
     $scope.save = function () {
         debugger;
-        RoleFactory.save($scope.model).then(function (success) {
-            alert(success.data);
-            $window.location.reload();
+        $validator.validate($scope).success(function () {
+            RoleFactory.save($scope.model).then(function (success) {
+                alert(success.data);
+                $window.location.reload();
+            });
         });
     };
 
@@ -54,7 +56,7 @@ app.controller("Role", ["$scope", "RoleFactory", "$timeout", "$location", "$wind
 app.factory("RoleFactory", ["$rootScope", "$http", "$q", "CommonFactory", function ($rootScope, $http, $q, CommonFactory) {
     this.init = function (success, failure) {
         var id = 0;
-         var urls = window.location.href.split('?')[0].split('/');
+        var urls = window.location.href.split('?')[0].split('/');
         if (!isNaN(urls[urls.length - 1]))
             id = eval(urls[urls.length - 1]);
         $q.all([

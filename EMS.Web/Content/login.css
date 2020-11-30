@@ -28,6 +28,22 @@ body {
     overflow-y: auto;
     
 }
+
+.loginbg{background-image:url(../images/loginbg.jpg); background-repeat:no-repeat; background-size:cover;}
+.loginbg1{background-image:url(../images/loginbg.jpg); background-repeat:no-repeat; background-size:inherit;}
+.login1{margin: 100px auto; float: none; padding:55px 48px; background:#dee2e6; border:1px solid #999;}
+.text-org{color:#ff7b00;}
+.ems a{color:#004aa9;}
+.mb-2 {
+    margin-bottom: 10px;
+}
+.mb-3 {
+    margin-bottom: 20px;
+}
+.mb-4 {
+    margin-bottom: 30px;
+}
+.m-0{margin:0}
 .form-control {
     background-color: #ffffff;
     background-image: none;

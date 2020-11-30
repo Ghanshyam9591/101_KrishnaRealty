@@ -3,21 +3,26 @@
     ViewBag.Title = "Lov Master";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="/Lov/Item/0">Lov Master</a> </li>
-    </ul>
-    <hr class="m-0">
-</div>
-<article class="col-md-12">
-    <div class="pt-3">
-        <div class="mb-4"> <a href="/Lov/Item/0" class="btn btn-secondary float-right ml-1">+</a></div>
-    </div>
-</article>
+<style>
+    .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
+</style>
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Lov
+            <small>Preview</small>
+        </h1>
+        <div class="breadcrumb">
+            <div class="mb-4"> <a href="/Lov/Item/0" class="btn btn-success float-right ml-1">+</a></div>
+        </div>
+    </section>
+</aside>
 <br />
-
 <div ng-app="myApp" ng-controller="LovList">
     <div style="overflow:auto">
         <table class="table table-hover table-bordered">

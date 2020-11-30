@@ -44,6 +44,20 @@ namespace EMS.Common
         public string action_type { get; set; }
         public string employee_name { get; set; }
     }
+    public class DASHBOARD_DETAIL_MODEL
+    {
+        public int total_enquiry { get; set; }
+        public int convert_to_leads { get; set; }
+        public int folowups { get; set; }
+        public int total_visitors { get; set; }
+    }
+    public class DASHBOARD_LOCATION_WISE_MODEL
+    {
+        public string location { get; set; }
+        public int total_enquiry { get; set; }
+        public int folowups { get; set; }
+        public int convert_to_lead { get; set; }
+    }
     public class UserDetailsModel
     {
         public int employee_code { get; set; }

@@ -1,17 +1,12 @@
 ﻿@{
     ViewBag.Title = "Rental Query Module";
 }
-<script src="~/Scripts/jquery-3.0.0.min.js"></script>
 <style>
-    /*label {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        text-align: center;
-        width: 150px;
-        line-height: 20px;
-        margin-bottom: 10px;
-    }*/
+    .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
 
     .btn-primary {
         color: #fff;
@@ -26,20 +21,26 @@
     .box {
         /*width: 150px;
           height: 150px;*/
-        opacity: 3;
+        /*opacity: 3;*/
         position: absolute;
-        top: 68px;
-        left: 35px;
+        width: 295px;
+        /*top: 68px;*/
+        /*left: 35px;*/
         z-index: 3;
     }
 </style>
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="#">Rental Query Module</a> </li>
-    </ul>
-    <hr class="m-0">
-</div>
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+           Rental Query Module
+            <small>Preview</small>
+        </h1>
+    </section>
+</aside>
+<br />
+
+<script src="~/Scripts/jquery-3.0.0.min.js"></script>
 
 <br />
 <div ng-app="myApp" ng-controller="RentalQueryModule">

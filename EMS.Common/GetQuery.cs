@@ -371,6 +371,20 @@ namespace EMS.Common
                 return @"select * from ems_fn_get_owner_renter_detail(:pseqid)";
             }
         }
+        public static string DASHBOARD_DETAIL
+        {
+            get
+            {
+                return @"select * from ems_fn_get_dashboad_detail(:pdate)";
+            }
+        }
+        public static string DASHBOARD_DETAIL_LOCATION_WISE
+        {
+            get
+            {
+                return @"select * from ems_fn_get_dashboad_detail_locationwise(:pdate)";
+            }
+        }
         public static string RENTAL_QUERY_MODULE_DATA_BY_PARA
         {
             get

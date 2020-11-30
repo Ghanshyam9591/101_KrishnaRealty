@@ -12,10 +12,11 @@
     @*<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">*@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/login.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @*<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>*@
-    <script src="~/Scripts/bootstrap.min.js"></script>
-   @* <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
-    <script src="~/Scripts/jquery-3.0.0.min.js"></script>
+   @* <script src="~/Scripts/bootstrap.min.js"></script>*@
+    @* <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>*@
+    <script src="~/Scripts/jquery-2.2.3.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
     <style>
@@ -25,58 +26,56 @@
         }
     </style>
 </head>
-<body>
+<body class="loginbg" ng-controller="loginCtrl" ng-app="myApp2">
     <!------ Include the above in your HEAD tag ---------->
-    <div class="login-box" ng-controller="loginCtrl" ng-app="myApp2">
-        <div class="login-logo">
-            <a><img src="~/images/Logo.png"></a>
-        </div><!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">Sign in to start your session</p>
+    <br />
+    <div class="container col-md-4 text-center login1 shadow bg-white rounded">
 
-            @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        <h3 class="mb-0"><img src="~/images/Logo.png" alt="Logo" /></h3>
+        @*<hr />*@
+        <h3 class="text-primary pb-3"><strong>Lead Management System</strong></h3>
+
+        @using (Html.BeginForm("Index", "Login", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group has-feedback">
-                    @Html.TextBoxFor(m => m.UserID, new { @class = "form-control", @placeholder = "Email", required = "required", type = "number" })
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", required = "required" })
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                if (!string.IsNullOrEmpty(ViewBag.errorMessage))
-                {
-                    <span class="has-error">@ViewBag.errorMessage</span>
-                    <br />
-                    <br />
-                }
-                <div class="row">
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-4">
-                        <input type="submit" value="Log in" class="btn btn-primary btn-block btn-flat" />
-                    </div>
-                </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="input-group mb-3 pl-3 pr-3">
+              @*  <span class="input-group-addon"><i class="fa fa-user"></i></span>*@
+                @Html.TextBoxFor(m => m.UserID, new { @class = "form-control", @placeholder = "Email", required = "required" })
+                <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+            </div>
+            <div class="input-group mb-3 pl-3 pr-3">
+               @* <span class="input-group-addon"><i class="fa fa-lock"></i></span>*@
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password", required = "required" })
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            if (!string.IsNullOrEmpty(ViewBag.errorMessage))
+            {
+                <span class="has-error">@ViewBag.errorMessage</span>
+                <br />
+                <br />
             }
+            <div class="pl-3 pr-3">
+                <input type="submit" value="Log in" class="btn btn-primary col-md-12" />
+            </div>
+        }
+    </div><!-- /.login-box-body -->
+    @*<script>
+            var app = angular.module('myApp2', []);
+            debugger;
+            app.controller("loginCtrl", ["$scope", "$timeout", "$location", "$window", function ($scope, $timeout, $location, $window) {
 
-        </div><!-- /.login-box-body -->
-        @*<script>
-                var app = angular.module('myApp2', []);
-                debugger;
-                app.controller("loginCtrl", ["$scope", "$timeout", "$location", "$window", function ($scope, $timeout, $location, $window) {
-
-                    $scope.signin = function (loginid, password) {
-                        var url = $location.absUrl().split('?')[0]
-                        if (loginid === "100" & password === "123") {
-                            $window.location.href = url + "Home";
-                        }
-                        else {
-                            alert("Invalid credentials !");
-                        }
-
+                $scope.signin = function (loginid, password) {
+                    var url = $location.absUrl().split('?')[0]
+                    if (loginid === "100" & password === "123") {
+                        $window.location.href = url + "Home";
                     }
-                }]);
-            </script>*@
-    </div>
+                    else {
+                        alert("Invalid credentials !");
+                    }
+
+                }
+            }]);
+        </script>*@
+
 </body>
 </html>

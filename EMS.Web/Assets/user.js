@@ -33,14 +33,16 @@ app.factory("UserListFactory", ["$rootScope", "$http", "$q", "CommonFactory", fu
 }]);
 
 
-app.controller("User", ["$scope", "UserFactory", "$timeout", "$location", "$window", function ($scope, UserFactory, $timeout, $location, $window) {
+app.controller("User", ["$scope", "UserFactory", "$timeout", "$location", "$window","$validator", function ($scope, UserFactory, $timeout, $location, $window,$validator) {
 
 
     $scope.save = function (model) {
-        UserFactory.save($scope.model).then(function (success) {
-            alert(success.data);
-            window.location.href = window.location.origin + '/User';
-            //$window.location.reload();
+        $validator.validate($scope).success(function () {
+            UserFactory.save($scope.model).then(function (success) {
+                alert(success.data);
+                window.location.href = window.location.origin + '/User';
+                //$window.location.reload();
+            });
         });
     };
 

@@ -3,14 +3,26 @@
     ViewBag.Title = "Lov Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="/LovCategory">Lov Category Master</a> </li>
-    </ul>
-    <hr class="m-0">
-</div>
-
+<style>
+    .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
+</style>
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Lov Category
+            <small>Preview</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/Home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Lov Category</li>
+        </ol>
+    </section>
+</aside>
 <br />
 <form ng-app="myApp" ng-controller="LovCategory">
     <div class="form-group row">

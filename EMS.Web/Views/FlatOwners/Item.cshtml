@@ -1,8 +1,13 @@
 ﻿@{
     ViewBag.Title = "Flat Owner";
 }
-
 <style>
+    .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
+
     .panel {
         margin-bottom: 20px;
         background-color: #fff;
@@ -46,20 +51,21 @@
         border-bottom: none;
     }
 </style>
-@*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">*@
 
-@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
-
-<div class="col-md-12 p-0">
-    <ul class="nav">
-        <li class="nav-item"> <a class="nav-link text-dark" href="javascript:void(0);"><strong>Statistics</strong></a> </li>
-        <li class="nav-item"> <a class="nav-link" href="#">Flat Owner</a> </li>
-    </ul>
-    <hr class="m-0">
-
-</div>
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Add Party
+            <small>Preview</small>
+        </h1>
+        <ol class="breadcrumb">
+            <li><a href="/Home"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li class="active">Add Party</li>
+        </ol>
+    </section>
+</aside>
 <br />
-
 <div ng-app="myApp" ng-controller="FlatOwners">
     <form>
         <fieldset class="scheduler-border">
@@ -78,7 +84,7 @@
                     <input type="text" class="form-control" ng-model="model.mobile2" />
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="">email</label>
+                    <label for="">Email</label>
                     <input type="text" class="form-control" ng-model="model.email" />
                 </div>
             </div>
@@ -99,7 +105,7 @@
                     <input type="text" class="form-control" ng-model="model.renter_mobile2" />
                 </div>
                 <div class="form-group col-md-3">
-                    <label for="">email</label>
+                    <label for="">Email</label>
                     <input type="text" class="form-control" ng-model="model.renter_email" />
                 </div>
             </div>
