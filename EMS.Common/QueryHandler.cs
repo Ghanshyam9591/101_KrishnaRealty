@@ -291,6 +291,43 @@ namespace EMS.Common
             return REM_LIST2;
         }
 
+
+        public static List<AutoEnquiryModl> GetAutoEnquiryGridList(DataTable DT)
+        {
+            List<AutoEnquiryModl> REM_LIST2 = new List<AutoEnquiryModl>();
+
+            DataColumnCollection columns = DT.Columns;
+
+            int RecordCount = 0;
+            foreach (DataRow drow in DT.Rows)
+            {
+                RecordCount++;
+                AutoEnquiryModl REM = new AutoEnquiryModl();
+                try
+                {
+                    REM.Name = string.IsNullOrWhiteSpace(drow["name"].ToString()) ? "" : drow["name"].ToString();
+                    REM.phone = string.IsNullOrWhiteSpace(drow["mobile1"].ToString()) ? "" : drow["mobile1"].ToString();
+                    REM.Email = string.IsNullOrWhiteSpace(drow["email_id"].ToString()) ? "" : drow["email_id"].ToString();
+                    REM.EnqSoure = string.IsNullOrWhiteSpace(drow["enquiry_source"].ToString()) ? "" : drow["enquiry_source"].ToString();
+                    REM.additional_Info= string.IsNullOrWhiteSpace(drow["additinal_info"].ToString()) ? "" : drow["additinal_info"].ToString();
+                    REM.Created_date = string.IsNullOrWhiteSpace(drow["created_date"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["created_date"]);
+                   
+                    REM_LIST2.Add(REM);
+                }
+                catch (Exception ex)
+                {
+                    if (RecordCount < 1)
+                    {
+                        RecordException RException = new RecordException();
+                        RException.ERR_MSG = ex.Message;
+                        RECORDED_ERR_LIST.Add(RException);
+                    }
+                }
+
+            }
+            return REM_LIST2;
+        }
+
         public static List<MenuModel> GetMenuRoleGridList(DataTable DT)
         {
             List<MenuModel> REM_LIST2 = new List<MenuModel>();

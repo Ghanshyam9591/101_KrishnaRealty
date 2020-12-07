@@ -40,7 +40,8 @@ namespace EMS.Web
                       "~/Assets/lovcategory.js",
                       "~/Assets/lov.js",
                       "~/Assets/home.js",
-                      "~/Assets/rentalquerymodule.js"));
+                      "~/Assets/rentalquerymodule.js",
+                      "~/Assets/autoenquiry.js"));
 
             //bundles.Add(new StyleBundle("~/Content/css").Include(
             //                                "~/Content/site.css"));

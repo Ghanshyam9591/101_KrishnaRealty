@@ -1,6 +1,7 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="../assets/app.js" />
 /// <reference path="../assets/assignenquiry.js" />
+/// <reference path="../assets/autoenquiry.js" />
 /// <reference path="../assets/callhistory.js" />
 /// <reference path="../assets/common.js" />
 /// <reference path="../assets/enquiry.js" />

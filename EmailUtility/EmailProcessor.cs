@@ -15,6 +15,7 @@ using System.Net;
 using System.Text;
 using HtmlAgilityPack;
 using EmailUtility;
+using Npgsql;
 
 namespace EmailUtility
 {
@@ -51,7 +52,8 @@ namespace EmailUtility
 
             Message EmailMessage = null;
             DTSEmail DTSemail = new DTSEmail();
-            DataTable dtExisting = getDataTable("getEmailUtilityEmailAudit", null);
+            DataTable dtExisting = new DataTable();
+            dtExisting = Helper.executeSelect(GetQuery.Get_Select_Email_Information, null);
             DataRow[] aRow;
             Pop3Client PopClient = new Pop3Client();
             List<string> mailCcIds = new List<string>();
@@ -87,7 +89,8 @@ namespace EmailUtility
             }
 
 
-            for (int i = 0; i < messageUids.Count; i++)
+            // for (int i = 0; i < messageUids.Count; i++)
+            for (int i = messageUids.Count; i-- > 0;)
             {
                 try
                 {
@@ -96,7 +99,7 @@ namespace EmailUtility
                     currentMessageId = i + 1;
 
                     aRow = dtExisting.Select("MessageUid = '" + messageUids[i] + "'");// today 1 feb comment 2020
-                    // aRow = dtExisting.Select("MessageUid = '" + messageUids[i] + "' and EmailReceivedDate ='" + getEmailDate(EmailMessage).ToString("dd-MMM-yyyy HH:mm:ss") + "'");
+                                                                                      // aRow = dtExisting.Select("MessageUid = '" + messageUids[i] + "' and EmailReceivedDate ='" + getEmailDate(EmailMessage).ToString("dd-MMM-yyyy HH:mm:ss") + "'");
                     if (aRow.Length < 1)
                     {
                         EmailMessage = PopClient.GetMessage(currentMessageId);
@@ -141,7 +144,7 @@ namespace EmailUtility
                 }
 
 
-                Helper.CheckEnquirySource(DTSemail.EmailReceivedFrom, sb_html_text.ToString(), sb_plain_text.ToString());
+                Helper.CheckEnquirySource(DTSemail.EmailReceivedFrom, DTSemail.EmailReceivedDateTime, sb_html_text.ToString(), sb_plain_text.ToString());
                 // OwnerModel ownmoderl = Helper.GetOwnerDetailsFrom99Acrs(docc.DocumentNode.InnerText.ToString());
                 //    if (ownmoderl != null)
                 //    {
@@ -827,132 +830,7 @@ namespace EmailUtility
             }
         }
 
-        private void PushToDatabase(DTSEmail dtsemail)
-        {
-            string filenames = "";
-            string defaultcc = ConfigurationManager.AppSettings["DefaultCCRecipients"];
-            string[] tempcc;
-            try
-            {
-                for (int k = 0; k < dtsemail.AttachmentNames.Count; k++)
-                {
-                    filenames += dtsemail.AttachmentNames[k] + ",";
-                }
-                filenames = filenames.TrimEnd(',');
 
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnectionString").ToString()))
-                {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "InsertUpdateFaxRecords";
-                    cmd.Parameters.AddWithValue("FaxSeq", 0);
-                    cmd.Parameters.AddWithValue("Clientid", dtsemail.ClientId);
-                    cmd.Parameters.AddWithValue("Name", dtsemail.InvestorName);
-                    cmd.Parameters.AddWithValue("FaxGUID", 0);
-                    cmd.Parameters.AddWithValue("FolderPath", dtsemail.ArchivedFolder + "\\");
-                    cmd.Parameters.AddWithValue("Timestamp", dtsemail.TimeStamp);
-                    cmd.Parameters.AddWithValue("Pagecount", dtsemail.PageCount);
-                    cmd.Parameters.AddWithValue("Callingno", 0);
-                    cmd.Parameters.AddWithValue("DistributorId", dtsemail.DistributorId);
-                    cmd.Parameters.AddWithValue("Createtime", Convert.ToDateTime(dtsemail.EmailReceivedDateTime).ToString("dd-MMM-yyyy hh:mm"));
-                    cmd.Parameters.AddWithValue("FromEmail", dtsemail.EmailReceivedFrom);
-                    cmd.Parameters.AddWithValue("FileName", filenames);
-                    if (dtsemail.GroupInvestorName != null && dtsemail.GroupInvestorName.Trim().Length > 1)
-                        cmd.Parameters.AddWithValue("IsGroup", 1);
-                    else
-                        cmd.Parameters.AddWithValue("IsGroup", 0);
-                    cmd.Connection = con;
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                WriteLog("Unable to insert record into tblfax. " + ex.ToString());
-                Console.WriteLine("Unable to Insert Record into database. Error is " + ex.ToString());
-            }
-
-
-            try
-            {
-                string emailids = "";
-                string mobilenos = "";
-                string action = "Reply";
-                string remark = "";
-
-                if (dtsemail.EmailReceivedFrom != null)
-                    emailids = dtsemail.EmailReceivedFrom + ",";
-
-                if (dtsemail.ClientEmailIds != null)
-                    for (int i = 0; i < dtsemail.ClientEmailIds.Count; i++)
-                    {
-                        emailids += dtsemail.ClientEmailIds[i] + ",";
-                    }
-
-                if (dtsemail.CCEmailIds != null)
-                    for (int m = 0; m < dtsemail.CCEmailIds.Count; m++)
-                    {
-                        emailids += dtsemail.CCEmailIds[m] + ",";
-                    }
-
-                tempcc = defaultcc.Split(',');
-                for (int k = 0; k < tempcc.Length; k++)
-                {
-                    emailids += tempcc[k] + ",";
-                }
-
-                if (dtsemail.RMEmailId != null)
-                    emailids += dtsemail.RMEmailId;
-
-                if (dtsemail.ClientCellnumbers != null)
-                    for (int j = 0; j < dtsemail.ClientCellnumbers.Count; j++)
-                    {
-                        mobilenos += dtsemail.ClientCellnumbers[j] + ",";
-                    }
-                if (dtsemail.RMMobileNumber != null)
-                    mobilenos += dtsemail.RMMobileNumber;
-
-                if (dtsemail.Status == EmailStatus.RecipientNotRegistered)
-                {
-                    remark = "Client Detail not found";
-                    action = "NotRegisteredMailID";
-                }
-
-                string strconn = ConfigurationManager.AppSettings.Get("ConnectionString").ToString();
-                using (SqlConnection con = new SqlConnection(strconn))
-                {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "InsertTransactionAudit";
-                    cmd.Parameters.AddWithValue("Utility", "TS");
-                    cmd.Parameters.AddWithValue("Clientid", dtsemail.ClientId);
-                    cmd.Parameters.AddWithValue("Name", dtsemail.InvestorName);
-                    cmd.Parameters.AddWithValue("FaxGUID", "0");
-                    cmd.Parameters.AddWithValue("FolderPath", dtsemail.ArchivedFolder + "\\");
-                    cmd.Parameters.AddWithValue("Timestamp", dtsemail.TimeStamp);
-                    cmd.Parameters.AddWithValue("Pagecount", dtsemail.PageCount);
-                    cmd.Parameters.AddWithValue("Callingno", 0);
-                    cmd.Parameters.AddWithValue("Createtime", Convert.ToDateTime(dtsemail.EmailReceivedDateTime).ToString("dd-MMM-yyyy hh:mm"));
-                    cmd.Parameters.AddWithValue("Filename", filenames);
-                    cmd.Parameters.AddWithValue("Emailids", emailids.TrimEnd(','));
-                    cmd.Parameters.AddWithValue("Attachments", dtsemail.AttachmentNames.Count);
-                    cmd.Parameters.AddWithValue("SMSnumbers", mobilenos.TrimEnd(','));
-                    cmd.Parameters.AddWithValue("Actions", action);
-                    cmd.Parameters.AddWithValue("Remarks", remark);
-                    cmd.Parameters.AddWithValue("FromEmail", dtsemail.EmailReceivedFrom);
-                    cmd.Connection = con;
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                WriteLog("Unable to insert record into tblTransaction_audit. " + ex.ToString());
-                Console.WriteLine("Unable to Insert Record into database. Error is " + ex.ToString());
-            }
-        }
 
         private void ArchiveFiles(DTSEmail dtsEmail)
         {
@@ -1016,27 +894,36 @@ namespace EmailUtility
 
         private void PreserveEmail(Message message, string MessageUid)
         {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnectionString").ToString()))
-                {
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.CommandText = "InsertEmailUtilityEmailAudit";
-                    cmd.Parameters.AddWithValue("EmailId", message.Headers.From.Address.ToString());
-                    cmd.Parameters.AddWithValue("EmailInfo", message.Headers.From.ToString());
-                    cmd.Parameters.AddWithValue("MessageUid", MessageUid);
-                    cmd.Parameters.AddWithValue("EmailReceivedDate", getEmailDate(message).ToString("dd-MMM-yyyy HH:mm:ss"));
-                    cmd.Connection = con;
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Unable to Preserve Email. " + ex.ToString());
-            }
+            NpgsqlParameter[] Insert_Parameters = {
+                                             new NpgsqlParameter("pemailid",message.Headers.From.Address.ToString()),
+                                             new NpgsqlParameter("pmessageuid",MessageUid),
+                                             new NpgsqlParameter("pemailrevieveddate",getEmailDate(message)),
+                                             new NpgsqlParameter("pemailinfo",message.Headers.From.ToString())
+            };
+            string Response = Helper.ExecuteProcedure("select ems_insertemailutilityaudit(:pemailid,:pmessageuid,:pemailrevieveddate,:pemailinfo)", Insert_Parameters);
+
+
+            //try
+            //{
+            //    using (SqlConnection con = new SqlConnection(ConfigurationManager.AppSettings.Get("ConnectionString").ToString()))
+            //    {
+            //        SqlCommand cmd = new SqlCommand();
+            //        cmd.CommandType = CommandType.StoredProcedure;
+            //        cmd.CommandText = "InsertEmailUtilityEmailAudit";
+            //        cmd.Parameters.AddWithValue("EmailId", message.Headers.From.Address.ToString());
+            //        cmd.Parameters.AddWithValue("EmailInfo", message.Headers.From.ToString());
+            //        cmd.Parameters.AddWithValue("MessageUid", MessageUid);
+            //        cmd.Parameters.AddWithValue("EmailReceivedDate", getEmailDate(message).ToString("dd-MMM-yyyy HH:mm:ss"));
+            //        cmd.Connection = con;
+            //        con.Open();
+            //        cmd.ExecuteNonQuery();
+            //        con.Close();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Unable to Preserve Email. " + ex.ToString());
+            //}
         }
     }
 }

@@ -10,6 +10,18 @@ namespace EMS.Common
     public class EMSModel
     {
     }
+    public class AutoEnquiryModl
+    {
+        public string Name { get; set; }
+        public string phone { get; set; }
+        public string Email { get; set; }
+        public string additional_Info { get; set; }
+        public DateTime EnquiryDate { get; set; }
+        public DateTime Created_date { get; set; }
+        public string EnqSoure { get; set; }
+
+
+    }
     public class baseclass
     {
         public int id { get; set; }

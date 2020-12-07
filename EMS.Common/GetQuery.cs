@@ -327,6 +327,14 @@ namespace EMS.Common
             }
         }
 
+        public static string AUTO_ENQUIRY_GRID_LIST
+        {
+            get
+            {
+                return @"select * from ems_fn_get_auto_enquiries()";
+            }
+        }
+
         public static string USER_GRID_DATA
         {
             get

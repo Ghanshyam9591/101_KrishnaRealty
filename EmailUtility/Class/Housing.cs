@@ -8,7 +8,7 @@ namespace EmailUtility.Class
 {
     public class Housing
     {
-        public static void GetHousingEnquiry(StringReader reader, DateTime EnquiryDate)
+        public static void GetHousingEnquiry(StringReader reader, DateTime EnquiryDate,DateTime EmailReceivedDate)
         {
             EnquiryModl EnqModel = new EnquiryModl();
             StringBuilder sb = new StringBuilder();
@@ -57,6 +57,7 @@ namespace EmailUtility.Class
                     EnqModel.Name = string.IsNullOrWhiteSpace(list_equiry[1]) ? "" : list_equiry[1];
                     EnqModel.Email= string.IsNullOrWhiteSpace(list_equiry[3]) ? "" : list_equiry[3];
                     EnqModel.phone= string.IsNullOrWhiteSpace(list_equiry[5]) ? "" : list_equiry[5];
+                    EnqModel.EnquiryDate = EmailReceivedDate;
 
                     EnqModel.additional_Info = sb.ToString();
                     EnqModel.EnqSoure = "Housing";

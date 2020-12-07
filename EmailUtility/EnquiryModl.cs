@@ -16,6 +16,14 @@ namespace EmailUtility
 
 
     }
+    public class EmailUtilityModel
+    {
+        public string email_id { get; set; }
+        public string messageuid { get; set; }
+        public DateTime emailreceived_date { get; set; }
+        public string emailinfo { get; set; }
+
+    }
     public class OwnerModel
     {
         public int ID { get; set; }

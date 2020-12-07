@@ -1,0 +1,53 @@
+﻿@{
+    ViewBag.Title = "Auto Enquiry";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .skin-black .right-side > .content-header {
+        background: transparent;
+        box-shadow: none;
+        margin-left: -232px;
+    }
+</style>
+<aside class="right-side">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+            Auto Enquiry
+            <small>Preview</small>
+        </h1>
+        <div class="breadcrumb">
+            <div class="mb-4"> <a href="/Lov/Item/0" class="btn btn-success float-right ml-1">+</a></div>
+        </div>
+    </section>
+</aside>
+<br />
+<div ng-app="myApp" ng-controller="AutoEnquiry">
+    <div style="overflow:auto">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr style="background-color:darkgrey">
+                    <th>SrNo</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Enquiry_Source</th>
+                    <th>Additional_Info</th>
+                    <th>Enquiry_Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in auto_enquiries">
+                    <td>{{$index+1}}</td>
+                    <td>{{item.Name}}</td>
+                    @*<td>{{item.Lov_code}}</td>*@
+                    <td>{{item.phone}}</td>
+                    <td>{{item.Email}}</td>
+                    <td>{{item.EnqSoure}} </td>
+                    <td>{{item.additional_Info}}</td>
+                    <td>{{item.Created_date | date:'dd-MMM-yyyy'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

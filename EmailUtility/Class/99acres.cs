@@ -9,7 +9,7 @@ namespace EmailUtility.Class
 {
     public class _99acres
     {
-        public static void GetEnquiry99Acrs(string EnqText)
+        public static void GetEnquiry99Acrs(string EnqText,DateTime EmailReceivedDate)
         {
             EnquiryModl OWM = new EnquiryModl();
             try
@@ -49,6 +49,7 @@ namespace EmailUtility.Class
                                         OWM.Name = string.IsNullOrWhiteSpace(list_enquiry[index_count]) ? "" : list_enquiry[index_count];
                                         OWM.Email = string.IsNullOrWhiteSpace(list_enquiry[index_count + 1]) ? "" : list_enquiry[index_count + 1];
                                         OWM.phone = string.IsNullOrWhiteSpace(list_enquiry[index_count + 2]) ? "" : list_enquiry[index_count + 2];
+                                        OWM.EnquiryDate = EmailReceivedDate;
                                         IsInsert = true;
                                         break;
                                     }

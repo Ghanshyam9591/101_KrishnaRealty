@@ -8,7 +8,7 @@ namespace EmailUtility.Class
 {
     public class Sulekha
     {
-        public static void GetSulekhEnquiry(StringReader reader, DateTime EnquiryDate)
+        public static void GetSulekhEnquiry(StringReader reader, DateTime EnquiryDate, DateTime EmailReceivedDate)
         {
             EnquiryModl EnqModel = new EnquiryModl();
             StringBuilder sb = new StringBuilder();
@@ -51,6 +51,7 @@ namespace EmailUtility.Class
             if (CheckCounter > 3)
             {
                 EnqModel.additional_Info = sb.ToString();
+                EnqModel.EnquiryDate = EmailReceivedDate;
                 EnqModel.EnqSoure = "Sulekha";
                 Helper.InsertInquery(EnqModel);
             }
