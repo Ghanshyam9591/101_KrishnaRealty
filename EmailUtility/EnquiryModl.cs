@@ -10,6 +10,7 @@ namespace EmailUtility
         public string Name { get; set; }
         public string phone { get; set; }
         public string Email { get; set; }
+        public string Email_body { get; set; }
         public string additional_Info { get; set; }
         public DateTime EnquiryDate { get; set; }
         public string EnqSoure { get; set; }

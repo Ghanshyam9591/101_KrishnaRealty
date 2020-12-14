@@ -12,9 +12,11 @@ namespace EMS.Common
     }
     public class AutoEnquiryModl
     {
+        public int id { get; set; }
         public string Name { get; set; }
         public string phone { get; set; }
         public string Email { get; set; }
+        public string Email_Body { get; set; }
         public string additional_Info { get; set; }
         public DateTime EnquiryDate { get; set; }
         public DateTime Created_date { get; set; }

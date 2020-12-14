@@ -102,7 +102,7 @@ namespace EMS.Common
                     REM.total_enquiry = string.IsNullOrWhiteSpace(drow["total_enquiry"].ToString()) ? 0 : Convert.ToInt32(drow["total_enquiry"].ToString());
                     REM.convert_to_leads = string.IsNullOrWhiteSpace(drow["convert_to_lead"].ToString()) ? 0 : Convert.ToInt32(drow["convert_to_lead"].ToString());
                     REM.folowups = string.IsNullOrWhiteSpace(drow["total_folowups"].ToString()) ? 0 : Convert.ToInt32(drow["total_folowups"]);
-                    REM.total_visitors = string.IsNullOrWhiteSpace(drow["total_visitors"].ToString()) ? 0 :Convert.ToInt32(drow["total_visitors"]);
+                    REM.total_visitors = string.IsNullOrWhiteSpace(drow["total_visitors"].ToString()) ? 0 : Convert.ToInt32(drow["total_visitors"]);
                     REM_LIST2.Add(REM);
                 }
                 catch (Exception ex)
@@ -305,13 +305,15 @@ namespace EMS.Common
                 AutoEnquiryModl REM = new AutoEnquiryModl();
                 try
                 {
+                    REM.id = string.IsNullOrWhiteSpace(drow["id"].ToString()) ? 0 : Convert.ToInt32(drow["id"]);
                     REM.Name = string.IsNullOrWhiteSpace(drow["name"].ToString()) ? "" : drow["name"].ToString();
                     REM.phone = string.IsNullOrWhiteSpace(drow["mobile1"].ToString()) ? "" : drow["mobile1"].ToString();
                     REM.Email = string.IsNullOrWhiteSpace(drow["email_id"].ToString()) ? "" : drow["email_id"].ToString();
                     REM.EnqSoure = string.IsNullOrWhiteSpace(drow["enquiry_source"].ToString()) ? "" : drow["enquiry_source"].ToString();
-                    REM.additional_Info= string.IsNullOrWhiteSpace(drow["additinal_info"].ToString()) ? "" : drow["additinal_info"].ToString();
+                    REM.additional_Info = string.IsNullOrWhiteSpace(drow["additinal_info"].ToString()) ? "" : drow["additinal_info"].ToString();
                     REM.Created_date = string.IsNullOrWhiteSpace(drow["created_date"].ToString()) ? Convert.ToDateTime(DateTime.Now.ToString("1900-01-01")) : Convert.ToDateTime(drow["created_date"]);
-                   
+                    REM.Email_Body= string.IsNullOrWhiteSpace(drow["email_body"].ToString()) ? "" : drow["email_body"].ToString();
+
                     REM_LIST2.Add(REM);
                 }
                 catch (Exception ex)

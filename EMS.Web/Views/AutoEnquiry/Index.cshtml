@@ -28,24 +28,26 @@
             <thead>
                 <tr style="background-color:darkgrey">
                     <th>SrNo</th>
-                    <th>Name</th>
+                    <th>Name____________</th>
                     <th>Mobile</th>
                     <th>Email</th>
                     <th>Enquiry_Source</th>
                     <th>Additional_Info</th>
                     <th>Enquiry_Date</th>
+                   @* <th>View_Email</th>*@
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="item in auto_enquiries">
                     <td>{{$index+1}}</td>
-                    <td>{{item.Name}}</td>
+                    <td><a href="/EnquiryDataEntry/Item/{{item.id}}">{{item.Name}}</a></td>
                     @*<td>{{item.Lov_code}}</td>*@
                     <td>{{item.phone}}</td>
                     <td>{{item.Email}}</td>
                     <td>{{item.EnqSoure}} </td>
                     <td>{{item.additional_Info}}</td>
                     <td>{{item.Created_date | date:'dd-MMM-yyyy'}}</td>
+                    @*<td>{{item.}}</td>*@
                 </tr>
             </tbody>
         </table>

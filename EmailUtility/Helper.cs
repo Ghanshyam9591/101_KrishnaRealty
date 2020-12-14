@@ -12,26 +12,28 @@ using Npgsql;
 
 namespace EmailUtility
 {
-    public  class Helper
+    public class Helper
     {
         static string strcon = ConfigurationManager.AppSettings["ConnectionString"].ToString();
         public static void CheckEnquirySource(string EnquiryFrom, DateTime EmailReceivedDate, string html_Emailbody, string str_email_body)
         {
             if (EnquiryFrom.ToLower().Contains("ypleads@sulekhanotifications.com"))
             {
-                StringReader reader = new StringReader(str_email_body);
-                Sulekha.GetSulekhEnquiry(reader, DateTime.Now, EmailReceivedDate);
+                if (str_email_body.Contains("!Sulekha Campaign Topup"))
+                {
+                    StringReader reader = new StringReader(str_email_body);
+                    Sulekha.GetSulekhEnquiry(reader, DateTime.Now, EmailReceivedDate);
+                }
             }
             else if (EnquiryFrom.ToLower().Contains("no-reply@99acres.com"))
             {
-                _99acres.GetEnquiry99Acrs(str_email_body, EmailReceivedDate);
+                _99acres.GetEnquiry99Acrs(html_Emailbody, EmailReceivedDate);
             }
             else if (EnquiryFrom.ToLower().Contains("noreply@housing-mailer.com"))
             {
-                StringReader reader = new StringReader(str_email_body);
-                Housing.GetHousingEnquiry(reader, DateTime.Now, EmailReceivedDate);
+                Housing.GetHousingEnquiry(html_Emailbody, DateTime.Now, EmailReceivedDate);
             }
-            else if (EnquiryFrom.ToLower().Contains("lead@magicbriks.com"))
+            else if (EnquiryFrom.ToLower().Contains("prop.ex@magicbricks.com"))
             {
 
             }
@@ -136,9 +138,10 @@ namespace EmailUtility
                                              new NpgsqlParameter("pmobile1",enqModl.phone),
                                              new NpgsqlParameter("pemail_id",enqModl.Email),
                                              new NpgsqlParameter("penquiry_source",enqModl.EnqSoure),
-                                             new NpgsqlParameter("padditional_info",enqModl.additional_Info)
+                                             new NpgsqlParameter("padditional_info",enqModl.additional_Info),
+                                             new NpgsqlParameter("pemail_body",enqModl.Email_body)
             };
-            string Response = Helper.ExecuteProcedure("select ems_fun_insert_auto_enquiry(:pname,:pmobile1,:pemail_id,:penquiry_source,:padditional_info)", Insert_Parameters);
+            string Response = Helper.ExecuteProcedure("select ems_fun_insert_auto_enquiry(:pname,:pmobile1,:pemail_id,:penquiry_source,:padditional_info,:pemail_body)", Insert_Parameters);
 
 
 
@@ -172,7 +175,7 @@ namespace EmailUtility
 
             return isSuccess;
         }
-        private static void WriteLog(string message)
+        public static void WriteLog(string message)
         {
             string ErrorLogDir = ConfigurationManager.AppSettings["ErrorLogFile"];
             if (!Directory.Exists(ErrorLogDir))

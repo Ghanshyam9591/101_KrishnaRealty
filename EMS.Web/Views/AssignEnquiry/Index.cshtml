@@ -47,7 +47,7 @@
                     <td>{{item.email}}</td>
                     <td>{{item.cost_upto}}</td>
                     <td><select ng-model="item.assign_to_id" id="assign_to_id" ng-options="x.SeqID as x.Name for x in users" class="form-control"></select></td>
-                    <td><button type="submit" class="btn btn-primary px-3" ng-click="save(item)">+</button></td>
+                    <td><button type="submit" class="btn btn-primary px-3" ng-click="processenquiries(item.id)">+</button></td>
                 </tr>
             </tbody>
         </table>

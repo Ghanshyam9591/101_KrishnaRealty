@@ -10,50 +10,57 @@ namespace EmailUtility.Class
     {
         public static void GetSulekhEnquiry(StringReader reader, DateTime EnquiryDate, DateTime EmailReceivedDate)
         {
-            EnquiryModl EnqModel = new EnquiryModl();
-            StringBuilder sb = new StringBuilder();
-            EnqModel.EnquiryDate = EnquiryDate;
-            int CheckCounter = 0;
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            try
             {
-                string[] values = line.Split(':');
-                if (values.Length > 1)
+                EnquiryModl EnqModel = new EnquiryModl();
+                StringBuilder sb = new StringBuilder();
+                EnqModel.EnquiryDate = EnquiryDate;
+                int CheckCounter = 0;
+                string line;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    if (line.Contains("Name :"))
+                    string[] values = line.Split(':');
+                    if (values.Length > 1)
                     {
-                        EnqModel.Name = values[1];
-                        CheckCounter++;
+                        if (line.Contains("Name :"))
+                        {
+                            EnqModel.Name = values[1];
+                            CheckCounter++;
+                        }
+                        if (line.Contains("Phone :"))
+                        {
+                            EnqModel.phone = values[1];
+                            CheckCounter++;
+                        }
+                        if (line.Contains("Email :"))
+                        {
+                            EnqModel.Email = values[1];
+                            CheckCounter++;
+                        }
+                        if (line.Contains("Project :"))
+                        {
+                            sb.AppendLine(values[1] + "|");
+                            CheckCounter++;
+                        }
+                        if (line.Contains("Title :"))
+                        {
+                            sb.AppendLine(values[1] + "|");
+                            CheckCounter++;
+                        }
                     }
-                    if (line.Contains("Phone :"))
-                    {
-                        EnqModel.phone = values[1];
-                        CheckCounter++;
-                    }
-                    if (line.Contains("Email :"))
-                    {
-                        EnqModel.Email = values[1];
-                        CheckCounter++;
-                    }
-                    if (line.Contains("Project :"))
-                    {
-                        sb.AppendLine(values[1] + "|");
-                        CheckCounter++;
-                    }
-                    if (line.Contains("Title :"))
-                    {
-                        sb.AppendLine(values[1] + "|");
-                        CheckCounter++;
-                    }
-                }
 
+                }
+                if (CheckCounter > 3)
+                {
+                    EnqModel.additional_Info = sb.ToString();
+                    EnqModel.EnquiryDate = EmailReceivedDate;
+                    EnqModel.EnqSoure = "Sulekha";
+                    Helper.InsertInquery(EnqModel);
+                }
             }
-            if (CheckCounter > 3)
+            catch (Exception exx)
             {
-                EnqModel.additional_Info = sb.ToString();
-                EnqModel.EnquiryDate = EmailReceivedDate;
-                EnqModel.EnqSoure = "Sulekha";
-                Helper.InsertInquery(EnqModel);
+                Helper.WriteLog("error in function [GetSulekhEnquiry] :" + exx.Message);
             }
         }
     }

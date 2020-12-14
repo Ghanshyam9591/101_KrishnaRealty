@@ -1,13 +1,5 @@
 ﻿app.controller("AutoEnquiry", ["$scope", "AutoEnquiryFactory", "$timeout", "$location", "$window", function ($scope, AutoEnquiryFactory, $timeout, $location, $window) {
 
-
-    //$scope.save = function () {
-    //    debugger;
-    //    LovFactory.save($scope.model).then(function (success) {
-    //        alert(success.data);
-    //        $window.location.reload();
-    //    });
-    //};
     setInterval(function () {
         AutoEnquiryFactory.init(
         function (success) {
