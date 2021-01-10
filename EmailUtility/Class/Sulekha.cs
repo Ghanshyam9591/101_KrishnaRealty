@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Data;
 
 namespace EmailUtility.Class
 {
     public class Sulekha
     {
-        public static void GetSulekhEnquiry(StringReader reader, DateTime EnquiryDate, DateTime EmailReceivedDate)
+        public static void GetSulekhEnquiry(StringReader reader, DateTime EnquiryDate, DateTime EmailReceivedDate,DataTable dt_config)
         {
             try
             {
@@ -52,9 +53,15 @@ namespace EmailUtility.Class
                 }
                 if (CheckCounter > 3)
                 {
+                    
                     EnqModel.additional_Info = sb.ToString();
                     EnqModel.EnquiryDate = EmailReceivedDate;
                     EnqModel.EnqSoure = "Sulekha";
+                    EnqModel.property_type_id = email_body_parsing.get_parse_value_as_number(dt_config, "property", sb.ToString(), EnqModel.EnqSoure);
+                    EnqModel.enquiry_source_id = email_body_parsing.get_parse_value_as_number(dt_config, "enquiry_source", sb.ToString(), EnqModel.EnqSoure);
+                    EnqModel.location_id = email_body_parsing.get_parse_value_as_number(dt_config, "location", sb.ToString(), EnqModel.EnqSoure);
+                    EnqModel.cost_upto = email_body_parsing.get_parse_value_as_number(dt_config, "cost_upto", sb.ToString(), EnqModel.EnqSoure);
+                    EnqModel.enquiry_type_id = email_body_parsing.get_parse_value_as_number(dt_config, "enquiry_type", sb.ToString(), EnqModel.EnqSoure);
                     Helper.InsertInquery(EnqModel);
                 }
             }

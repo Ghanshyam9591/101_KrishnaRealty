@@ -69,7 +69,7 @@ namespace EmailUtility
                 PopClient.Authenticate(CorporateEmail, CorporatPass, AuthenticationMethod.UsernameAndPassword);
                 TotalEmailCount = PopClient.GetMessageCount();
                 messageUids = PopClient.GetMessageUids();
-
+                Console.WriteLine("Total email count :" + TotalEmailCount);
             }
             catch (Exception ex)
             {
@@ -103,7 +103,7 @@ namespace EmailUtility
                     {
                         EmailMessage = PopClient.GetMessage(currentMessageId);
                         PreserveEmail(EmailMessage, messageUids[i]);
-                        //Console.WriteLine(EmailMessage.Headers.From.Address.ToString());
+                        Console.WriteLine(EmailMessage.Headers.From.Address.ToString());
                         //if (EmailMessage.Headers.From.Address.ToString().Contains("kreality00@gmail.com"))
                         //    continue;
                     }

@@ -166,6 +166,10 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="WhatsAppApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WhatsAppAPI.15.4.29\lib\net40\WhatsAppApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +262,7 @@
     <Compile Include="Controllers\AssignEnquiryController.cs" />
     <Compile Include="Controllers\AutoEnquiryController.cs" />
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\EmailviewerController.cs" />
     <Compile Include="Controllers\EnquiryDataEntryController.cs" />
     <Compile Include="Controllers\CallHistoryController.cs" />
     <Compile Include="Controllers\FlatOwnersController.cs" />
@@ -273,6 +278,7 @@
     <Compile Include="Controllers\QueryModuleController.cs" />
     <Compile Include="Controllers\RentalQueryModuleController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SendMessageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1854,10 +1860,12 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\jquery-2.2.3.min.map" />
     <Content Include="Views\AutoEnquiry\Index.cshtml" />
+    <Content Include="Views\Emailviewer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Common\" />
+    <Folder Include="Views\SendMessage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

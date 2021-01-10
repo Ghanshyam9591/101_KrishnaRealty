@@ -17,7 +17,7 @@
             <small>Preview</small>
         </h1>
         <div class="breadcrumb">
-            <div class="mb-4"> <a href="/Lov/Item/0" class="btn btn-success float-right ml-1">+</a></div>
+            <div class="mb-4"> <a href="/AutoEnquiry/Item/0" class="btn btn-success float-right ml-1">+</a></div>
         </div>
     </section>
 </aside>
@@ -34,7 +34,7 @@
                     <th>Enquiry_Source</th>
                     <th>Additional_Info</th>
                     <th>Enquiry_Date</th>
-                   @* <th>View_Email</th>*@
+                    <th>View_Email</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,6 +47,7 @@
                     <td>{{item.EnqSoure}} </td>
                     <td>{{item.additional_Info}}</td>
                     <td>{{item.Created_date | date:'dd-MMM-yyyy'}}</td>
+                    <td><button type="submit" class="btn btn-primary mb-2" ng-click="view_email(item,$index)">View Email</button></td>
                     @*<td>{{item.}}</td>*@
                 </tr>
             </tbody>

@@ -10,8 +10,10 @@ namespace EmailUtility
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Utility Started");
             EmailProcessor emailProcessor = new EmailProcessor();
             emailProcessor.ProcessEmails();
+            Console.WriteLine("Utility Completed");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace EmailUtility.Class
 {
     public class Housing
     {
-        public static void GetHousingEnquiry(string htmlstring, DateTime EnquiryDate, DateTime EmailReceivedDate)
+        public static void GetHousingEnquiry(string htmlstring, DateTime EnquiryDate, DateTime EmailReceivedDate,DataTable dt_config)
         {
             try
             {
@@ -75,13 +76,18 @@ namespace EmailUtility.Class
                             if (list_equiry.Count == 15)
                             {
                                 EnqModel.Name = string.IsNullOrWhiteSpace(list_equiry[1]) ? "" : list_equiry[1];
-                                EnqModel.Email = string.IsNullOrWhiteSpace(list_equiry[3]) ? "" : list_equiry[3];
+                                EnqModel.Email =string.IsNullOrWhiteSpace(list_equiry[3]) ? "" : list_equiry[3];
                                 EnqModel.phone = string.IsNullOrWhiteSpace(list_equiry[5]) ? "" : list_equiry[5];
                                 EnqModel.EnquiryDate = EmailReceivedDate;
                                 EnqModel.Email_body = htmlstring;
                                 EnqModel.additional_Info = sb.ToString();
                                 EnqModel.EnqSoure = "Housing";
-
+                                
+                                EnqModel.property_type_id = email_body_parsing.get_parse_value_as_number(dt_config, "property", tabkeString, EnqModel.EnqSoure);
+                                EnqModel.enquiry_source_id = email_body_parsing.get_parse_value_as_number(dt_config, "enquiry_source", tabkeString, EnqModel.EnqSoure);
+                                EnqModel.location_id = email_body_parsing.get_parse_value_as_number(dt_config, "location", tabkeString, EnqModel.EnqSoure);
+                                EnqModel.cost_upto = email_body_parsing.get_parse_value_as_number(dt_config, "cost_upto", tabkeString, EnqModel.EnqSoure);
+                                EnqModel.enquiry_type_id = email_body_parsing.get_parse_value_as_number(dt_config, "enquiry_type", tabkeString, EnqModel.EnqSoure);
                                 Helper.InsertInquery(EnqModel);
                                 break;
                             }
@@ -94,6 +100,8 @@ namespace EmailUtility.Class
             catch (Exception ex)
             {
                 Helper.WriteLog("error in function [GetHousingEnquiry] " + ex.Message);
+                Helper.WriteLog("error in fun GetHousingEnquiry :error msg -" + ex.Message);
+                Helper.WriteLog("error in fun GetHousingEnquiry email body :" + htmlstring);
             }
         }
     }

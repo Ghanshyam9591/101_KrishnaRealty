@@ -11,8 +11,17 @@ namespace EmailUtility
         public string phone { get; set; }
         public string Email { get; set; }
         public string Email_body { get; set; }
+        public int location_id { get; set; }
+        public string location { get; set; }
+        public string actual_cost_upto { get; set; }
+        public int enquiry_type_id { get; set; }
+        public decimal cost_upto { get; set; }
+        public int property_type_id { get; set; }
+        public string property_type { get; set; }
+        public int sqft_area { get; set; }
         public string additional_Info { get; set; }
         public DateTime EnquiryDate { get; set; }
+        public int enquiry_source_id { get; set; }
         public string EnqSoure { get; set; }
 
 
@@ -39,5 +48,30 @@ namespace EmailUtility
         public string Mobile3 { get; set; }
         public string Location { get; set; }
         public string Source { get; set; }
+    }
+    public class parse_location_model
+    {
+        public int location_id { get; set; }
+        public string location { get; set; }
+    }
+    public class parse_property_model
+    {
+        public int property_type_id { get; set; }
+        public string property { get; set; }
+    }
+    public class parse_costupto_model
+    {
+        public decimal cost_upto { get; set; }
+        public string cost_upto_lebel { get; set; }
+    }
+    public class parse_enquiry_source_model
+    {
+        public int enquiry_source_id { get; set; }
+        public string enquiry_source { get; set; }
+    }
+    public class parse_enquiry_type_model
+    {
+        public int enquiry_type_id { get; set; }
+        public string enquiry_type { get; set; }
     }
 }

@@ -5,12 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Data;
 
 namespace EmailUtility.Class
 {
     public class _99acres
     {
-        public static void GetEnquiry99Acrs(string EnqText, DateTime EmailReceivedDate)
+        public static void GetEnquiry99Acrs(string EnqText, DateTime EmailReceivedDate, DataTable dt_config)
         {
             try
             {
@@ -34,7 +35,7 @@ namespace EmailUtility.Class
                             if (!string.IsNullOrEmpty(line.Trim()))
                             {
                                 line = line.Trim();
-                                if (line.Trim().Contains("Property Advertisement Query"))
+                                if (line.Trim().Contains("Property Advertisement Query") || (line.Trim().Contains("Property Advertisement Response")) || (line.Trim().Contains("Request for Uploading photographs")))
                                 {
                                     IsOk2 = true;
                                     continue;
@@ -45,8 +46,18 @@ namespace EmailUtility.Class
                                     {
                                         string[] line2 = System.Text.RegularExpressions.Regex.Split(line, @"\s{2,}");
 
-                                        list_enquiry.Add(line2[0]);
-                                        list_enquiry.Add(line2[1]);
+                                        string email = Helper.Get_emaid_from_string(line);
+                                        string mobile = Helper.Get_mobile_from_string(line);
+                                        if (string.IsNullOrWhiteSpace(email) && string.IsNullOrWhiteSpace(mobile))
+                                        {
+                                            list_enquiry.Add(line2[0]);
+                                            list_enquiry.Add(line2[1]);
+                                        }
+                                        else
+                                        {
+                                            list_enquiry.Add(email);
+                                            list_enquiry.Add(mobile);
+                                        }
                                     }
                                     else
                                     {
@@ -60,7 +71,7 @@ namespace EmailUtility.Class
                                     foreach (string detail in list_enquiry)
                                     {
                                         index_count++;
-                                        if (detail.Contains("Details of the Query"))
+                                        if (detail.Trim().Contains("Details of the Query") || detail.Trim().Contains("Details of the response"))
                                         {
                                             OWM.Name = string.IsNullOrWhiteSpace(list_enquiry[index_count]) ? "" : list_enquiry[index_count];
                                             OWM.Email = string.IsNullOrWhiteSpace(list_enquiry[index_count + 1]) ? "" : list_enquiry[index_count + 1];
@@ -80,11 +91,19 @@ namespace EmailUtility.Class
                                 }
                             }
                     }
-                    if (IsInsert)
+                    if (IsInsert || !IsOk2)
                     {
                         OWM.additional_Info = sb.ToString();
                         OWM.EnqSoure = "99acres";
+                        OWM.Email = Helper.Get_emaid_from_string(tabkeString);
+                        OWM.phone = Helper.Get_mobile_from_string(tabkeString);
+                        OWM.property_type_id = email_body_parsing.get_parse_value_as_number(dt_config, "property", tabkeString, OWM.EnqSoure);
+                        OWM.enquiry_source_id = email_body_parsing.get_parse_value_as_number(dt_config, "enquiry_source", tabkeString, OWM.EnqSoure);
+                        OWM.location_id = email_body_parsing.get_parse_value_as_number(dt_config, "location", tabkeString, OWM.EnqSoure);
+                        OWM.cost_upto = email_body_parsing.get_parse_value_as_number(dt_config, "cost_upto", tabkeString, OWM.EnqSoure);
+                        OWM.enquiry_type_id = email_body_parsing.get_parse_value_as_number(dt_config, "enquiry_type", tabkeString, OWM.EnqSoure);
                         Helper.InsertInquery(OWM);
+
                         break;
                     }
 
@@ -93,6 +112,7 @@ namespace EmailUtility.Class
             catch (Exception exx)
             {
                 Console.WriteLine("failed to read Enquiry :" + exx.Message);
+                Helper.WriteLog("error in fun GetEnquiry99Acrs :error msg -"+exx.Message);
             }
 
         }

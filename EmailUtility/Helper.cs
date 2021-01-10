@@ -17,28 +17,47 @@ namespace EmailUtility
         static string strcon = ConfigurationManager.AppSettings["ConnectionString"].ToString();
         public static void CheckEnquirySource(string EnquiryFrom, DateTime EmailReceivedDate, string html_Emailbody, string str_email_body)
         {
+            DataTable dt_config = Helper.executeSelect("select * from lms_tbl_email_body_parsing where is_active=true", null);
+
             if (EnquiryFrom.ToLower().Contains("ypleads@sulekhanotifications.com"))
             {
                 if (str_email_body.Contains("!Sulekha Campaign Topup"))
                 {
                     StringReader reader = new StringReader(str_email_body);
-                    Sulekha.GetSulekhEnquiry(reader, DateTime.Now, EmailReceivedDate);
+                    Sulekha.GetSulekhEnquiry(reader, DateTime.Now, EmailReceivedDate, dt_config);
                 }
             }
             else if (EnquiryFrom.ToLower().Contains("no-reply@99acres.com"))
             {
-                _99acres.GetEnquiry99Acrs(html_Emailbody, EmailReceivedDate);
+                _99acres.GetEnquiry99Acrs(html_Emailbody, EmailReceivedDate, dt_config);
             }
             else if (EnquiryFrom.ToLower().Contains("noreply@housing-mailer.com"))
             {
-                Housing.GetHousingEnquiry(html_Emailbody, DateTime.Now, EmailReceivedDate);
+                Housing.GetHousingEnquiry(html_Emailbody, DateTime.Now, EmailReceivedDate, dt_config);
             }
             else if (EnquiryFrom.ToLower().Contains("prop.ex@magicbricks.com"))
             {
 
             }
         }
-
+        public static string get_enquiry_type(string strbody)
+        {
+            StringReader reader = new StringReader(strbody);
+            string line;
+            while ((line = reader.ReadLine()) != null)
+            {
+                line = line.Trim();
+                if ((line.Contains("₹") && line.ToLower().Contains("l")) || (line.ToLower().Contains("rs") && line.ToLower().Contains("lac")))
+                {
+                    return "Sale";
+                }
+                else if (line.Contains("₹") && line.ToLower().Contains("k"))
+                {
+                    return "Rent";
+                }
+            }
+            return "";
+        }
         public static string ExecuteProcedure(string procedure_name, NpgsqlParameter[] paramenters)
         {
             DataTable dt = new DataTable();
@@ -134,14 +153,19 @@ namespace EmailUtility
             bool isSuccess = false;
 
             NpgsqlParameter[] Insert_Parameters = {
-                                             new NpgsqlParameter("pname",enqModl.Name),
+                                             new NpgsqlParameter("pname",string.IsNullOrWhiteSpace(enqModl.Name)?"":enqModl.Name),
                                              new NpgsqlParameter("pmobile1",enqModl.phone),
                                              new NpgsqlParameter("pemail_id",enqModl.Email),
                                              new NpgsqlParameter("penquiry_source",enqModl.EnqSoure),
-                                             new NpgsqlParameter("padditional_info",enqModl.additional_Info),
-                                             new NpgsqlParameter("pemail_body",enqModl.Email_body)
+                                             new NpgsqlParameter("padditional_info",string.IsNullOrWhiteSpace(enqModl.additional_Info)?"":enqModl.additional_Info),
+                                             new NpgsqlParameter("pemail_body",string.IsNullOrWhiteSpace(enqModl.Email_body)?"":enqModl.Email_body),
+                                             new NpgsqlParameter("plocation_id",enqModl.location_id),
+                                             new NpgsqlParameter("pproperty_type_id",enqModl.property_type_id),
+                                             new NpgsqlParameter("penquiry_type_id",enqModl.enquiry_type_id),
+                                             new NpgsqlParameter("penquiry_source_id",enqModl.enquiry_source_id),
+                                             new NpgsqlParameter("pcost_upto",enqModl.cost_upto)
             };
-            string Response = Helper.ExecuteProcedure("select ems_fun_insert_auto_enquiry(:pname,:pmobile1,:pemail_id,:penquiry_source,:padditional_info,:pemail_body)", Insert_Parameters);
+            string Response = Helper.ExecuteProcedure("select ems_fun_insert_auto_enquiry(:pname,:pmobile1,:pemail_id,:penquiry_source,:padditional_info,:pemail_body,:plocation_id,:pproperty_type_id,:penquiry_type_id,:penquiry_source_id,:pcost_upto)", Insert_Parameters);
 
 
 
@@ -187,6 +211,50 @@ namespace EmailUtility
             {
                 sw.WriteLine(DateTime.Now.ToString("dd-MMM-yy HH:mm:ss") + "\t" + message);
             }
+        }
+
+        public static string Get_emaid_from_string(string text)
+        {
+            const string MatchEmailPattern =
+           @"(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
+           + @"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\."
+             + @"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\.([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+           + @"([a-zA-Z]+[\w-]+\.)+[a-zA-Z]{2,4})";
+            Regex rx = new Regex(MatchEmailPattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            // Find matches.
+            MatchCollection matches = rx.Matches(text);
+            // Report the number of matches found.
+            int noOfMatches = matches.Count;
+
+            // Report on each match.
+            foreach (Match match in matches)
+            {
+                return match.Value.ToString();
+            }
+            return "";
+        }
+        public static string Get_mobile_from_string(string text)
+        {
+            const string MatchPhonePattern = @"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}";
+
+            Regex rx = new Regex(MatchPhonePattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+            // Find matches.
+            MatchCollection matches = rx.Matches(text);
+
+            // Report the number of matches found.
+            int noOfMatches = matches.Count;
+
+
+            //Do something with the matches
+
+            foreach (Match match in matches)
+            {
+                //Do something with the matches
+                return match.Value.ToString(); ;
+
+            }
+            return "";
         }
     }
 }

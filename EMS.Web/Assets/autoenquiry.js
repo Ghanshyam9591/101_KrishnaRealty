@@ -1,5 +1,9 @@
 ﻿app.controller("AutoEnquiry", ["$scope", "AutoEnquiryFactory", "$timeout", "$location", "$window", function ($scope, AutoEnquiryFactory, $timeout, $location, $window) {
 
+    $scope.view_email = function () {
+        $window.open('https://www.google.com', '_blank');
+    }
+
     setInterval(function () {
         AutoEnquiryFactory.init(
         function (success) {
